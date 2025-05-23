@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Agent Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        /* General Body and Layout Styling */
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            margin: 0;
+            overflow-y: auto; /* Enable scrolling for the entire page */
+        }
+    
+        /* Navbar Styling */
+        .navbar {
+            background-color: #003366;
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1050;
+        }
+        .navbar-brand {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #fff;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+        }
+        .navbar-brand i {
+            font-size: 2.5rem;
+            margin-right: 10px;
+            color: #ffcc00;
+        }
+        .navbar-nav .nav-link {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-right: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+        .navbar-nav .nav-link:hover {
+            color: #ffcc00;
+        }
+        .navbar-nav .nav-link.active {
+            color: #008000;
+        }
+    
+    
+        .left-navbar {
+            width: 312px;
+            background-color: #003366;/* Gradient background */
+            position: fixed;
+            top: 86px;
+            bottom: 0;
+            z-index: 1050;
+            overflow-y: auto;
+            transition: all 0.3s;
+            height: calc(100vh - 86px); /* Ensuring full height */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+        }
+
+        .left-navbar .nav-link {
+            color: #d1d3e2;
+            background: #1e2a3a;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 12px;
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.1);
+            font-size: 1.1rem;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .left-navbar .nav-link:hover {
+            color: #fff;
+            background: #ff5733;
+            transform: scale(1.05); /* Slight zoom on hover */
+        }
+
+        .left-navbar .nav-link i {
+            color: #fff;
+            margin-right: 10px;
+        }
+
+        .left-navbar .nav-link span {
+            transition: color 0.3s ease;
+        }
+
+        .left-navbar .nav-link:hover span {
+            color: #fff;
+        }
+
+        .left-navbar .nav-item.active .nav-link {
+            background: #60a5fa; /* Active link styling */
+        }
+
+    
+        /* Main Content Area Styling */
+        .main-content {
+            margin-left: 250px;
+            margin-top: 86px; /* Account for the fixed navbar */
+            padding: 20px;
+        }
+    
+        .agent-card {
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            transition: transform 0.3s, box-shadow 0.3s ease;
+        }
+    
+        .agent-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+    
+        .btn-back {
+            background-color: #003366;
+            color: white;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: block;
+            text-align: center;
+            margin: 20px auto;
+            transition: background-color 0.3s ease;
+        }
+    
+        .btn-back:hover {
+            background-color: #0051a3;
+        }
+    
+        /* Footer Styling */
+        footer {
+            background-color: #003366;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+            margin-top: auto;
+        }
+        footer .social-icons a {
+            color: #fff;
+            font-size: 1.7rem;
+            margin: 0 10px;
+            text-decoration: none;
+            transition: color 0.3s, transform 0.3s;
+        }
+    
+        footer .social-icons a:hover {
+            color: #ffcc00;
+            transform: scale(1.1);
+        }
+    
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .left-navbar {
+                position: absolute;
+                width: 70%;
+                top: 86px;
+                left: -100%;
+                transition: all 0.3s;
+            }
+            .left-navbar.active {
+                left: 0;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg  bg-primary navbar-dark">
+        <div class="container-fluid">
+            <!-- Sidebar Toggle Button and Logo -->
+            <div class="d-flex align-items-center">
+                <!-- Sidebar Toggle Button -->
+                <button class="btn btn-primary bg-primary  me-3" id="sidebarToggle" style="padding: 10px 15px; font-size: 1.2rem;">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <!-- Logo -->
+                <a class="navbar-brand d-flex align-items-center" href="#" style="color: #fff; font-weight: bold; font-size: 17px;">
+                    <i class="fas fa-shield-alt me-2"></i> SecureLife Insurance
+                </a>
+            </div>
+        </div>
+    </nav>
+ 
+    <nav class="left-navbar d-flex flex-column p-4 text-light shadow-lg" id="sidebar">
+        <h4 class="font-weight-bold text-uppercase mb-4" style="color: #ffffffbb; font-size: 1.2rem;">Menu</h4>
+        <ul class="navbar-nav d-flex flex-column gap-3">
+            <li class="nav-item">
+                <a href="{% url 'agent_profile' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-tachometer-alt"></i>
+                    <span>Agent Profile</span>
+                </a>
+            </li>
+           
+            <li class="nav-item">
+                <a href="{% url 'add_client' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-user-plus"></i>
+                    <span>Add Client</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a href="{% url 'collected_clients' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-users"></i>
+                    <span>Collected Clients</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'assigned_campaigns' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-bullhorn"></i>
+                    <span>Assigned Campaigns</span>
+                </a>
+            </li>
+            
+            <li class="nav-item">
+                <a href="{% url 'logout_view' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+  <!-- Main Content Section -->
+<!-- agent_details.html -->
+<div class="main-content">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="agent-card">
+                <h4 class="text-center">Agent Details</h4>
+
+                <!-- Agent's Profile Picture -->
+                <div class="text-center mb-3">
+                    <img src="{{ agent.profile_picture.url }}" alt="Agent Profile Picture" class="img-fluid rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
+                </div>
+
+                <div class="text-center">
+                    <h5 class="card-title">{{ agent.name }}</h5>
+                    <p class="card-location"><strong>Location:</strong> {{ agent.location }}</p>
+
+                    <!-- Personal Information Section -->
+                    <p class="card-info"><strong>Full Name:</strong> {{ agent.name }}</p>
+                    <p class="card-info"><strong>Phone Number:</strong> {{ agent.phone_number }}</p>
+                    <p class="card-info"><strong>Address:</strong> {{ agent.address }}</p>
+                    <p class="card-info"><strong>Age:</strong> {{ agent.age }}</p>
+                    <p class="card-info"><strong>Date of Birth:</strong> {{ agent.dob|date:"d F Y" }}</p>
+
+                    <!-- Professional Information Section -->
+                    <p class="card-info"><strong>Department:</strong> {{ agent.department }}</p>
+                    <p class="card-info"><strong>Agent ID:</strong> {{ agent.agent_id }}</p>
+                    <p class="card-info"><strong>Start Date:</strong> {{ agent.start_date|date:"d F Y" }}</p>
+
+                    <!-- Track Location Button -->
+                    <form action="{% url 'tracked_location' %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" id="track-location-btn" class="btn btn-primary mt-3">Track Location</button>
+                    </form>
+                </div>
+
+                <a href="{% url 'view_agents'  %}" class="btn-back">Back to Agents List</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 SecureLife Insurance. All rights reserved.</p>
+        <div class="social-icons">
+            <a href="#" class="fab fa-facebook"></a>
+            <a href="#" class="fab fa-twitter"></a>
+            <a href="#" class="fab fa-linkedin"></a>
+            <a href="#" class="fab fa-instagram"></a>
+        </div>
+    </footer>
+
+    <!-- Location Tracking Script -->
+    <script>
+        // Sidebar toggle functionality for mobile
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.querySelector('.navbar-toggler');
+
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+    </script>  
+
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Include Font Awesome -->
+    <title>Login</title>
+    <style>
+        /* Custom Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar Styling */
+        /* Navbar Styling */
+        .navbar {
+            background-color: #003366; /* Dark Blue */
+            padding: 20px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #fff;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand i {
+            font-size: 2.5rem; /* Icon size */
+            margin-right: 10px;
+            color: #ffcc00; /* Icon color */
+        }
+
+        .navbar-nav .nav-link {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-right: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #ffcc00; /* Gold color on hover */
+        }
+
+        .navbar-nav .nav-link.active {
+            color: #008000;
+        }
+
+        .navbar-brand i {
+    color: #ffcc00; /* Ensure icon color is bright for visibility */
+}
+        /* Login Section */
+        .login-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            background-color: #f4f7fa;
+            padding: 20px;
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+
+        /* Styling the Login Card */
+        .login-card {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            transition: all .3s;
+        }
+
+        /* Login Card Title */
+        .login-card h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #003366;
+            margin-bottom: 20px;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #003366;
+            box-shadow: 0px 0px 5px rgba(0, 51, 102, 0.3);
+        }
+
+        .btn-primary {
+            background-color: #003366;
+            color: #ffffff;
+            font-weight: 600;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #002244;
+            transform: scale(1.05);
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: none;
+            border: 4px solid #f3f3f3; /* Light grey */
+            border-top: 4px solid #003366; /* Blue */
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            margin: 10px auto;
+        }
+
+        /* Footer Styling */
+        footer {
+            background-color: #003366;
+            color: #fff;
+            text-align: center;
+            padding: 50px 20px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        footer .social-icons {
+            margin-top: 30px;
+        }
+
+        footer .social-icons a {
+            color: #fff;
+            font-size: 1.7rem;
+            margin: 0 20px;
+            text-decoration: none;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        footer .social-icons a:hover {
+            color: #ffcc00;
+            transform: scale(1.1);
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            0% { opacity: 0; visibility: hidden; }
+            100% { opacity: 1; visibility: visible; }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .stylish-title {
+            font-size: 2.5rem;
+    font-weight: 500;
+    color: #003366; /* Elegant dark blue */
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid #003366; /* Underline effect */
+    padding-bottom: 10px;
+}
+.stylish-navbar .nav-link {
+    font-size: 16px;
+    transition: color 0.3s ease-in-out;
+}
+
+.stylish-navbar .nav-link:hover {
+    color: #ffd700; /* Gold hover effect */
+}
+
+.stylish-navbar .nav-link.active {
+    font-weight: bold;
+    color: yellow; /* Stands out on active */
+    border-bottom: 3px solid #ffd700; /* Highlight active link */
+}
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark stylish-navbar  bg-primary  shadow-sm" >
+        <div class="container-fluid">
+            <!-- Brand -->
+            <a class="navbar-brand d-flex align-items-center" href="#" style="font-weight: bold; font-size: 12px; padding-left: 10%; letter-spacing: 1px;">
+                <i class="fas fa-shield-alt me-2"></i> SecureLife Insurance
+            </a>
+    
+            <!-- Navbar Toggler -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    
+            <!-- Navbar Links -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}" style="padding: 10px 20px; font-size: 16px; transition: all 0.3s;">
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'login_view' %}active{% endif %}" href="{% url 'login_view' %}" style="padding: 10px 20px; font-size: 16px; transition: all 0.3s;">
+                            Login
+                        </a>
+                    </li>
+                 
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url 'about' %}" style="padding: 10px 20px; font-size: 16px; transition: all 0.3s;">
+                            About Us
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="login-section d-flex justify-content-center align-items-center">
+            <div class="login-card p-4 shadow-sm rounded">
+                <h1 class="stylish-title">Login</h1>
+    
+                <div class="message-section mb-4">
+                    {% if messages %}
+                    {% for msg in messages %}
+                    <div class="alert alert-info" role="alert">{{ msg }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+    
+                <form id="loginForm" method="post" action="{% url 'login_view' %}">
+                    {% csrf_token %}
+    
+                    <!-- Username Field -->
+                    <div class="form-group mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input 
+                            type="text" 
+                            id="username" 
+                            name="username" 
+                            class="form-control" 
+                            required 
+                            placeholder="Enter your username" 
+                            aria-label="Username"
+                        >
+                    </div>
+    
+                    <!-- Password Field -->
+                    <div class="form-group mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            class="form-control" 
+                            required 
+                            placeholder="Enter your password" 
+                            aria-label="Password"
+                        >
+                    </div>
+    
+                    <!-- Submit Button -->
+                    <button 
+                        type="submit" 
+                        class="btn btn-primary w-100 mt-4"
+                        aria-label="Login"
+                    >
+                        Login
+                    </button>
+                </form>
+    
+                <!-- Loading Spinner -->
+                <div id="loading-spinner" class="spinner-border text-primary d-none" aria-hidden="true"></div>
+    
+                <div class="text-center mt-3">
+                    <a href="#" class="text-muted small">Forgot Password?</a>
+                </div>
+    
+                <!-- Social Media Login Options -->
+                <div class="mt-4 text-center">
+                    <p class="text-muted">Or login with</p>
+                    <button class="btn btn-danger w-100 mb-2">
+                        <i class="fab fa-google"></i> Google
+                    </button>
+                    <button class="btn btn-primary w-100">
+                        <i class="fab fa-facebook"></i> Facebook
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 SecureLife Insurance. All Rights Reserved.</p>
+        <div class="social-icons">
+            <a href="#" class="fab fa-facebook-f" aria-label="Facebook"></a>
+            <a href="#" class="fab fa-twitter" aria-label="Twitter"></a>
+            <a href="#" class="fab fa-linkedin-in" aria-label="LinkedIn"></a>
+            <a href="#" class="fab fa-instagram" aria-label="Instagram"></a>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

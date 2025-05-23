@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Add Campaign</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <style>
+        /* Body and layout styling */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* Fixed Navbar on top */
+        .navbar {
+            background-color: #003366;
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1050;
+        }
+
+
+
+
+        #sidebar {
+            position: fixed;
+            top: 76px;
+            left: 0;
+            height: calc(100% - 56px);
+            width: 250px;
+            background-color: #003366;
+            color: white;
+            padding-top: 20px;
+            transition: width 0.3s ease, margin-left 0.3s ease;
+            overflow: hidden;
+        }
+
+        #sidebar.open {
+            width: 70px;
+        }
+
+        #sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #sidebar .nav-item {
+            margin-bottom: 1rem;
+        }
+
+        #sidebar a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        #sidebar a:hover,
+        #sidebar a.active {
+            background-color: #0056b3;
+        }
+
+        #sidebar i {
+            font-size: 1.5rem;
+            text-align: center;
+            width: 40px;
+        }
+
+        #sidebar a span {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            opacity: 1;
+            visibility: visible;
+            white-space: nowrap;
+        }
+
+        #sidebar.open a span {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            transition: margin-left 0.3s ease;
+            padding: 20px;
+        }
+
+        #sidebar.open~.main-content {
+            margin-left: 70px;
+        }
+
+
+
+
+        /* Main Content */
+        .main-content {
+            margin-left: 120px;
+            /* Default sidebar width */
+            margin-top: 56px;
+            /* Navbar height */
+
+            padding-top: 20px;
+            padding: 20px;
+            transition: margin-left 0.3s ease;
+            overflow: hidden;
+        }
+
+        #sidebar.close~.main-content {
+            margin-left: 100px;
+            /* Adjust for minimized sidebar */
+        }
+
+        .container.main-content {
+            padding-left: 200px;
+            /* Adjust padding for larger screens */
+        }
+
+
+        @media (max-width: 500px) {
+            #sidebar {
+                position: fixed;
+                width: 70px;
+                height: 100%;
+            }
+
+            #sidebar.open~.main-content {
+                margin-left: 300px;
+            }
+
+            #sidebar.open {
+                width: 250px;
+            }
+
+            #sidebar a span {
+                opacity: 0;
+                visibility: hidden;
+            }
+
+            #sidebar.open a span {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .main-content {
+                margin-left: 27%;
+                /* No left margin on mobile */
+                margin-top: 56px;
+                padding: 10px;
+                /* Adjust padding */
+                width: 65%;
+                /* Ensure full width */
+                text-align: center;
+                /* Center text */
+
+            }
+
+            .container.main-content {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            /* Adjust cards for mobile screens */
+            .col-12.col-md-4.mb-4 {
+                margin-bottom: 10px;
+            }
+        }
+
+        /* Small screens (500px - 609px) */
+        @media (min-width: 500px) and (max-width: 609px) {
+            #sidebar {
+                position: fixed;
+                width: 70px;
+                height: 100%;
+            }
+
+            #sidebar.open {
+                width: 150px;
+            }
+
+            #sidebar a span {
+                opacity: 0;
+                visibility: hidden;
+            }
+
+            #sidebar.open a span {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .main-content {
+                margin-left: 17%;
+                /* No left margin on mobile */
+                margin-top: 56px;
+                padding: 15px;
+                /* Adjust padding for small screens */
+                width: 80%;
+                /* Ensure full width */
+                text-align: center;
+                /* Center text */
+
+            }
+
+            .container.main-content {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            /* Adjust cards for small screens */
+            .col-12.col-md-4.mb-4 {
+                margin-bottom: 10px;
+            }
+        }
+
+        /* Medium screens (610px - 875px) */
+        @media (min-width: 610px) and (max-width: 875px) {
+            #sidebar {
+                position: fixed;
+                width: 70px;
+                height: 100%;
+            }
+
+            #sidebar.open {
+                width: 250px;
+            }
+
+            #sidebar a span {
+                opacity: 0;
+                visibility: hidden;
+            }
+
+            #sidebar.open a span {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .main-content {
+                margin-left: 16%;
+                /* No left margin on mobile */
+                margin-top: 56px;
+                padding: 20px;
+                /* Adjust padding */
+                width: 500px;
+                /* Ensure full width minus sidebar */
+                max-width: 900px;
+                text-align: center;
+                /* Center text */
+
+            }
+
+            .container.main-content {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .col-12.col-md-4.mb-4 {
+                margin-bottom: 20px;
+            }
+        }
+
+        /* Large screens (above 875px) */
+        @media (min-width: 875px) {
+            #sidebar {
+                width: 250px;
+                position: fixed;
+                height: 100%;
+            }
+
+            .main-content {
+                margin-left: 32%;
+                /* No left margin on mobile */
+                margin-top: 56px;
+                padding: 30px;
+                width: 65%;
+                /* Adjust content width */
+                max-width: 1000px;
+
+            }
+
+            .container.main-content {
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+
+            .col-12.col-md-4.mb-4 {
+                margin-bottom: 30px;
+            }
+        }
+
+        /* Very large screens (above 1280px) */
+        @media (min-width: 1280px) {
+            #sidebar {
+                width: 250px;
+                position: fixed;
+                height: 100%;
+            }
+
+            .main-content {
+                margin-left: 36%;
+                /* No left margin on mobile */
+                margin-top: 56px;
+                padding: 30px;
+                width: 65%;
+                /* Adjust content width */
+                max-width: 1000px;
+
+            }
+
+            .container.main-content {
+                padding-left: 40px;
+                padding-right: 40px;
+            }
+
+            .col-12.col-md-4.mb-4 .card {
+                margin-bottom: 30px;
+            }
+        }
+
+
+
+        .main-content h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .table-responsive {
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .table-striped>tbody>tr:nth-of-type(odd) {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .table-dark th {
+            background-color: #003366;
+            color: white;
+        }
+
+        .table .btn-sm {
+            font-size: 0.85rem;
+            padding: 4px 8px;
+        }
+
+        /* Mobile Sidebar */
+        .sidebar-toggler {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar-toggler {
+                display: block;
+                color: #fff;
+                font-size: 1.5rem;
+                cursor: pointer;
+                padding: 10px;
+            }
+        }
+
+        /* Main container styling */
+
+
+        /* Card styling */
+        .card {
+            background-color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        /* Card title */
+        .card-title {
+            color: #ffffff;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        /* Form labels */
+        .form-label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Input fields */
+        .form-control {
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 1rem;
+            background-color: #f8f9fa;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+        }
+
+        /* Submit button */
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .navbar-brand i {
+            font-size: 2.5rem;
+            /* Icon size */
+            margin-right: 10px;
+            color: #ffcc00;
+            /* Icon color */
+        }
+
+        /* Highlight active menu item */
+        .navbar-nav .nav-item.active {
+            background-color: #1a73e8;
+            /* Bright blue background for active item */
+            border-radius: 5px;
+            /* Rounded corners */
+        }
+
+        .navbar-nav .nav-item.active .nav-link {
+            color: #ffffff;
+            /* White text for active item */
+            font-weight: bold;
+            /* Bold text for active item */
+        }
+
+        .navbar-nav .nav-item.active .nav-link i {
+            color: #ffffff;
+            /* Icon color for active item */
+        }
+
+        /* Add hover effect for other items */
+        .navbar-nav .nav-item:hover {
+            background-color: #0056b3;
+            /* Dark blue background on hover */
+            border-radius: 5px;
+        }
+
+        .badge {
+            padding: 0.5em 1em;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .badge i {
+            margin-left: 0.5em;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-primary navbar-dark">
+        <div class="container-fluid">
+            <div class="d-flex align-items-center">
+                <button class="btn btn-primary bg-primary me-3" id="sidebarToggle"
+                    style="padding: 10px 15px; font-size: 1.2rem;">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <a class="navbar-brand d-flex align-items-center" href="#"
+                    style="color: #fff; font-weight: bold; font-size: 17px;">
+                    <i class="fas fa-shield-alt me-2"></i> SecureLife Insurance
+                </a>
+            </div>
+        </div>
+    </nav>
+
+
+
+
+
+
+    <!-- Sidebar -->
+    <nav id="sidebar">
+        <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
+            <h4 class="font-weight-bold text-uppercase mb-4" style="font-size: 1.2rem;">Menu</h4>
+
+        </div>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a href="{% url 'admin_home' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-tachometer-alt"></i>
+                    <span>Admin Home</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'add_agent' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-user-plus"></i>
+                    <span>Add Agents</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'view_agents' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-users"></i>
+                    <span>View Agents</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a href="{% url 'create_campaign' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-bullhorn"></i>
+                    <span>Add Campaign</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'admin_view_campaign' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-clipboard-list"></i>
+                    <span>View Campaigns</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'logout_view' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+
+    <!-- Main Content Section -->
+    <br>
+    <br>
+    <br>
+    <div class="container main-content p-3">
+        <div class="card shadow-lg w-100" style="max-width: 600px; border-radius: 12px;">
+            <!-- Card Header -->
+            <div class="card-header text-center" style="background-color: #007bff; color: #ffffff; padding: 20px;">
+                <h2 class="card-title mb-0">Create New Campaign</h2>
+            </div>
+
+            <!-- Message Section -->
+            <div class="message-section mb-4">
+                {% if messages %}
+                {% for msg in messages %}
+                <div class="alert alert-info" role="alert">{{ msg }}</div>
+                {% endfor %}
+                {% endif %}
+            </div>
+
+            <!-- Card Body -->
+            <div class="card-body p-4" style="background-color: #ffffff;">
+                <form method="POST" enctype="multipart/form-data" action="{% url 'create_campaign' %}">
+                    {% csrf_token %}
+
+                    <!-- Campaign Name -->
+                    <div class="mb-3">
+                        <label for="name" class="form-label text-secondary fw-bold">
+                            <i class="fas fa-flag me-2"></i> Campaign Name
+                        </label>
+                        <input type="text" class="form-control shadow-sm" id="name" name="name"
+                            placeholder="Enter campaign name" required>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="mb-3">
+                        <label for="location" class="form-label text-secondary fw-bold">
+                            <i class="fas fa-map-marker-alt me-2"></i> Location
+                        </label>
+                        <input type="text" class="form-control shadow-sm" id="location" name="location"
+                            placeholder="Enter location" required>
+                    </div>
+
+                    <!-- Start Date -->
+                    <div class="mb-3">
+                        <label for="start_date" class="form-label text-secondary fw-bold">
+                            <i class="fas fa-calendar-alt me-2"></i> Start Date
+                        </label>
+                        <input type="date" class="form-control shadow-sm" id="start_date" name="start_date" required>
+                    </div>
+
+                    <!-- End Date -->
+                    <div class="mb-3">
+                        <label for="end_date" class="form-label text-secondary fw-bold">
+                            <i class="fas fa-calendar-check me-2"></i> End Date
+                        </label>
+                        <input type="date" class="form-control shadow-sm" id="end_date" name="end_date" required>
+                    </div>
+
+                    <!-- Time -->
+                    <div class="mb-3">
+                        <label for="time" class="form-label text-secondary fw-bold">
+                            <i class="fas fa-clock me-2"></i> Time
+                        </label>
+                        <input type="time" class="form-control shadow-sm" id="time" name="time" required>
+                    </div>
+
+
+
+                    <!-- Basic Details -->
+                    <div class="mb-3">
+                        <label for="basic_details" class="form-label text-secondary fw-bold">
+                            <i class="fas fa-info-circle me-2"></i> Basic Details
+                        </label>
+                        <textarea class="form-control shadow-sm" id="basic_details" name="basic_details" rows="3"
+                            placeholder="Provide a brief description of the campaign" required></textarea>
+                    </div>
+
+                    <!-- Image Upload -->
+                    <div class="mb-3">
+                        <label for="image" class="form-label text-secondary fw-bold">
+                            <i class="fas fa-image me-2"></i> Upload Campaign Image
+                        </label>
+                        <input type="file" class="form-control shadow-sm" id="image" name="image" required>
+                    </div>
+
+                  <!-- Assigned Agents -->
+<div class="mb-3">
+    <label for="assigned_agents" class="form-label text-secondary fw-bold">
+        <i class="fas fa-user-check me-2"></i> Assign Agents
+    </label>
+
+    <!-- Selected agent display -->
+    <div id="selectedAgents" class="mb-2 d-flex flex-wrap gap-2">
+        <!-- Dynamically populated selected agents will appear here -->
+    </div>
+
+    <!-- Hidden input to store selected agent IDs -->
+    <input type="hidden" name="assigned_agents_ids" id="assigned_agents_ids">
+
+    <!-- Dropdown for selecting agents -->
+    <select class="form-select shadow-sm" id="assigned_agents" name="assigned_agents" onchange="addSelectedAgent()" required>
+        <option value="" disabled selected>Select an agent</option>
+        {% for agent in agents %}
+        <option value="{{ agent.id }}">{{ agent.name }}</option>
+        {% endfor %}
+    </select>
+    <div class="invalid-feedback" id="agent-error" style="display: none;">
+        Please assign at least one agent.
+    </div>
+</div>
+
+
+                    <!-- Submit Button -->
+                    <div class="d-grid">
+                        <button type="submit"
+                            class="btn btn-primary shadow-sm d-flex align-items-center justify-content-center"
+                            style="border-radius: 30px; padding: 8px 15px; font-size: 14px;">
+                            <i class="fas fa-paper-plane me-2"></i> Create Campaign
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to handle agent selection and update the dropdown
+        function addSelectedAgent() {
+            var selectedAgent = document.getElementById('assigned_agents').value;
+            var selectedAgentText = document.getElementById('assigned_agents').options[document.getElementById('assigned_agents').selectedIndex].text;
+            var selectedAgentsDiv = document.getElementById('selectedAgents');
+    
+            // If an agent is selected, display it and hide the dropdown
+            if (selectedAgent) {
+                // Clear previous selections if any
+                selectedAgentsDiv.innerHTML = '';
+    
+                // Create a new div element to show the selected agent name
+                var agentDisplay = document.createElement('div');
+                agentDisplay.classList.add('badge', 'bg-info', 'text-white', 'px-3', 'py-2');
+                agentDisplay.textContent = selectedAgentText;
+    
+                // Append the selected agent display to the container
+                selectedAgentsDiv.appendChild(agentDisplay);
+    
+                // Add the agent ID to the hidden input
+                document.getElementById('assigned_agents_ids').value = selectedAgent;
+    
+                // Optionally, disable the dropdown after selection to prevent re-selection
+                document.getElementById('assigned_agents').disabled = true;
+    
+                // Hide the error message (if any)
+                document.getElementById('agent-error').style.display = 'none';
+            }
+        }
+    </script>
+
+    <script>
+        // Initialize an empty array to store selected agent IDs
+        let selectedAgents = [];
+
+        function addSelectedAgent() {
+            const select = document.getElementById("assigned_agents");
+            const selectedValue = select.value;
+            const selectedText = select.options[select.selectedIndex].text;
+
+            // Only add the agent if it's not already selected
+            if (selectedValue && !selectedAgents.includes(selectedValue)) {
+                // Add selected agent ID to the array
+                selectedAgents.push(selectedValue);
+
+                // Create a span element to represent the selected agent
+                const agentElement = document.createElement("span");
+                agentElement.classList.add("badge", "bg-primary", "me-1", "d-flex", "align-items-center");
+
+                // Display the agent's name as text inside the badge
+                const agentName = document.createElement("span");
+                agentName.textContent = selectedText;
+                agentElement.appendChild(agentName);
+
+                // Create a close button (X) for removing the agent
+                const closeButton = document.createElement("button");
+                closeButton.classList.add("btn-close", "ms-2");
+                closeButton.type = "button";
+                closeButton.onclick = function () {
+                    // Remove the agent from the selected list
+                    selectedAgents = selectedAgents.filter(id => id !== selectedValue);
+                    agentElement.remove();
+                    updateAssignedAgentsInput();
+                };
+
+                // Append the close button to the agent element
+                agentElement.appendChild(closeButton);
+
+                // Append the agent element to the selected agents display
+                document.getElementById("selectedAgents").appendChild(agentElement);
+
+                // Update the hidden input field with the selected agent IDs
+                updateAssignedAgentsInput();
+            }
+        }
+
+        // Update the hidden input field with the selected agent IDs
+        function updateAssignedAgentsInput() {
+            document.getElementById("assigned_agents_ids").value = selectedAgents.join(",");
+        }
+    </script>
+
+
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <br>
+    <br>
+
+
+
+
+
+    <script>
+        const toggleButton = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
+
+        toggleButton.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+
+        const links = sidebar.querySelectorAll('a');
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                links.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            });
+        });
+    </script>
+
+</body>
+
+</html>

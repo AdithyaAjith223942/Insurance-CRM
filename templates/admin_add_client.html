@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Add Client</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <style>
+        /* Body and layout styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            background-color: #f9f9f9;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Fixed Navbar on top */
+        .navbar {
+            background-color: #003366;
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1050;
+        }
+
+        .navbar-brand {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #fff;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand i {
+            font-size: 2.5rem;
+            margin-right: 10px;
+            color: #ffcc00;
+        }
+
+        .navbar-nav .nav-link {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-right: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #ffcc00;
+        }
+
+        .navbar-nav .nav-link.active {
+            color: #008000;
+        }
+
+        /* Fixed Sidebar */
+        .left-navbar {
+            width: 312px;
+            background-color: #003366;
+            /* Gradient background */
+            position: fixed;
+            top: 86px;
+            bottom: 0;
+            z-index: 1050;
+            overflow-y: auto;
+            transition: all 0.3s;
+            height: calc(100vh - 86px);
+            /* Ensuring full height */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            /* Shadow for depth */
+        }
+
+        .left-navbar .nav-link {
+            color: #d1d3e2;
+            background: #1e2a3a;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 12px;
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.1);
+            font-size: 1.1rem;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .left-navbar .nav-link:hover {
+            color: #fff;
+            background: #ff5733;
+            transform: scale(1.05);
+            /* Slight zoom on hover */
+        }
+
+        .left-navbar .nav-link i {
+            color: #fff;
+            margin-right: 10px;
+        }
+
+        .left-navbar .nav-link span {
+            transition: color 0.3s ease;
+        }
+
+        .left-navbar .nav-link:hover span {
+            color: #fff;
+        }
+
+        .left-navbar .nav-item.active .nav-link {
+            background: #60a5fa;
+            /* Active link styling */
+        }
+
+
+        /* Main content area */
+        .main-content {
+            flex-grow: 1;
+            margin-left: 312px;
+            padding: 20px;
+            padding-top: 100px; /* Offset for navbar */
+            min-height: calc(100vh - 86px); /* Full height minus the navbar */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        footer {
+            background-color: #003366;
+            color: #fff;
+            text-align: center;
+            padding: 20px 20px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            margin-top: auto;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        footer .social-icons {
+            margin-top: 30px;
+        }
+
+        footer .social-icons a {
+            color: #fff;
+            font-size: 1.7rem;
+            margin: 0 20px;
+            text-decoration: none;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        footer .social-icons a:hover {
+            color: #ffcc00;
+            transform: scale(1.1);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .left-navbar {
+                position: absolute;
+                width: 80%;
+                top: 86px;
+                left: -100%;
+                height: calc(100% - 56px);
+                transition: all 0.3s;
+            }
+
+            .left-navbar.active {
+                left: 0;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+        }
+
+        .main-content h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .table-responsive {
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .table-striped>tbody>tr:nth-of-type(odd) {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .table-dark th {
+            background-color: #003366;
+            color: white;
+        }
+
+        .table .btn-sm {
+            font-size: 0.85rem;
+            padding: 4px 8px;
+        }
+
+        /* Mobile Sidebar */
+        .sidebar-toggler {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar-toggler {
+                display: block;
+                color: #fff;
+                font-size: 1.5rem;
+                cursor: pointer;
+                padding: 10px;
+            }
+            /* Adjust form card width for mobile */
+            .form-card {
+                max-width: 100%;
+                margin-left: 10%;
+                margin-right: 10%;
+            }
+        }
+
+        /* Centering Content */
+        .centered-container {
+            padding-left: 10%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 86px);
+            /* Full height minus the navbar */
+            width: 100%;
+            padding-top: 20px;
+        }
+
+        .form-card {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        .form-control {
+            border-radius: 8px;
+        }
+
+        .btn-primary {
+            background-color: #003366;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            padding: 12px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg  bg-primary navbar-dark">
+        <div class="container-fluid">
+            <!-- Sidebar Toggle Button and Logo -->
+            <div class="d-flex align-items-center">
+                <!-- Sidebar Toggle Button -->
+                <button class="btn btn-primary bg-primary  me-3" id="sidebarToggle" style="padding: 10px 15px; font-size: 1.2rem;">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <!-- Logo -->
+                <a class="navbar-brand d-flex align-items-center" href="#" style="color: #fff; font-weight: bold; font-size: 17px;">
+                    <i class="fas fa-shield-alt me-2"></i> SecureLife Insurance
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+     <!-- Sidebar Navigation -->
+     <nav class="left-navbar d-flex flex-column p-4 text-light shadow-lg" id="sidebar">
+        <h4 class="font-weight-bold text-uppercase mb-4" style="color: #ffffffbb; font-size: 1.2rem;">Menu</h4>
+        <ul class="navbar-nav d-flex flex-column gap-3">
+            <li class="nav-item">
+                <a href="{% url 'admin_home' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-tachometer-alt"></i>
+                    <span>Admin Home</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'add_agent' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-user-plus"></i>
+                    <span>Add Agents</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a href="{% url 'view_agents' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-users"></i>
+                    <span>View Agents</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'create_campaign' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-bullhorn"></i>
+                    <span>Add Campaign</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'view_campaigns' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-clipboard-list"></i>
+                    <span>View Campaigns</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'logout_view' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+<br>
+<br>
+
+<div class="main-content">
+    <div class="container">
+        <div class="form-card mx-auto" style="max-width: 800px; padding: 20px; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            <div class="card-body">
+                <h2 class="text-center mb-4" style="font-weight: 600; color: #003366;">Add Client</h2>
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                   
+
+                    <div class="form-group mb-4">
+                        <label for="name" class="form-label">Client Name</label>
+                        <input type="text" class="form-control form-control-lg" id="name" name="name" required
+                            placeholder="Enter client name">
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="phone_number" class="form-label">Phone Number</label>
+                        <input type="text" class="form-control form-control-lg" id="phone_number" name="phone_number"
+                            required placeholder="Enter phone number">
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="address" class="form-label">Address</label>
+                        <textarea class="form-control" id="address" name="address" rows="3" required
+                            placeholder="Enter address"></textarea>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="age" class="form-label">Age</label>
+                        <input type="number" class="form-control form-control-lg" id="age" name="age" required
+                            placeholder="Enter age">
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="dob" class="form-label">Date of Birth</label>
+                        <input type="date" class="form-control form-control-lg" id="dob" name="dob" required>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="profession" class="form-label">Profession</label>
+                        <input type="text" class="form-control form-control-lg" id="profession" name="profession"
+                            required placeholder="Enter profession">
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="qualification" class="form-label">Qualification</label>
+                        <input type="text" class="form-control form-control-lg" id="qualification" name="qualification"
+                            required placeholder="Enter qualification">
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="annual_income" class="form-label">Annual Income</label>
+                        <input type="number" class="form-control form-control-lg" id="annual_income"
+                            name="annual_income" required placeholder="Enter annual income">
+                    </div>
+
+              
+
+                    <div class="form-group mb-4">
+                        <label for="aadhar_number" class="form-label">Aadhar Card Number</label>
+                        <input type="text" class="form-control form-control-lg" id="aadhar_number" name="aadhar_number"
+                            required placeholder="Enter Aadhar number">
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="pan_number" class="form-label">PAN Card Number</label>
+                        <input type="text" class="form-control form-control-lg" id="pan_number" name="pan_number"
+                            required placeholder="Enter PAN number">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100" style="padding: 12px; font-weight: 600; border-radius: 5px; transition: background-color 0.3s ease;">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<footer>
+    <p>&copy; 2024 SecureLife Insurance. All rights reserved.</p>
+    <div class="social-icons">
+        <a href="#" class="fab fa-facebook"></a>
+        <a href="#" class="fab fa-twitter"></a>
+        <a href="#" class="fab fa-linkedin"></a>
+        <a href="#" class="fab fa-instagram"></a>
+    </div>
+</footer>
+
+<script>
+    // Sidebar toggle functionality for mobile
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.querySelector('.navbar-toggler');
+
+    sidebarToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
+    });
+</script>
+
+</body>
+
+</html>

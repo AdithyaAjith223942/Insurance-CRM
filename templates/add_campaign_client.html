@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Add Client</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <style>
+        /* Body and Layout Styling */
+ body {
+     font-family: 'Poppins', sans-serif;
+     margin: 0;
+     display: flex;
+     flex-direction: column;
+     min-height: 100vh;
+     background-color: #f4f6f9;
+     overflow-x: hidden;
+ }
+ 
+ /* Navbar Styling */
+ .navbar {
+             background-color: #003366;
+             color: white;
+             padding: 20px 0;
+             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+             position: fixed;
+             top: 0;
+             width: 100%;
+             z-index: 1050;
+         }
+         .navbar-brand i {
+             font-size: 2.5rem;
+             margin-right: 10px;
+             color: #ffcc00;
+         }
+         #sidebar {
+     position: fixed;
+     top: 76px;
+     left: 0;
+     height: calc(100% - 56px);
+     width: 250px;
+     background-color: #003366;
+     color: white;
+     padding-top: 20px;
+     transition: width 0.3s ease, margin-left 0.3s ease;
+     overflow: hidden;
+ }
+ 
+ #sidebar.open {
+     width: 70px;
+ }
+ 
+ #sidebar ul {
+     list-style: none;
+     padding: 0;
+ }
+ 
+ #sidebar .nav-item {
+     margin-bottom: 1rem;
+ }
+ 
+ #sidebar a {
+     color: white;
+     text-decoration: none;
+     display: flex;
+     align-items: center;
+     gap: 15px;
+     padding: 10px;
+     border-radius: 8px;
+     transition: background-color 0.3s ease;
+ }
+ 
+ #sidebar a:hover,
+ #sidebar a.active {
+     background-color: #0056b3;
+ }
+ 
+ #sidebar i {
+     font-size: 1.5rem;
+     text-align: center;
+     width: 40px;
+ }
+ 
+ #sidebar a span {
+     transition: opacity 0.3s ease, visibility 0.3s ease;
+     opacity: 1;
+     visibility: visible;
+     white-space: nowrap;
+ }
+ 
+ #sidebar.open a span {
+     opacity: 0;
+     visibility: hidden;
+ }
+ 
+ .main-content {
+     margin-left: 250px;
+     transition: margin-left 0.3s ease;
+     padding: 20px;
+ }
+ 
+ #sidebar.open ~ .main-content {
+     margin-left: 70px;
+ }
+ 
+ 
+ /* Main Content Styling */
+ .main-content {
+             margin-left: 250px;
+             margin-top: 76px;
+             padding: 20px;
+             transition: margin-left 0.3s ease;
+         }
+ 
+ 
+ 
+ /* Form Card Styling */
+ .form-card {
+     width: 100%;
+     max-width: 800px;
+     padding: 30px;
+     background-color: #ffffff;
+     border-radius: 12px;
+     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+     margin: 40px auto;
+ }
+ 
+ .form-control {
+     border-radius: 8px;
+ }
+ 
+ .btn-primary {
+     background-color: #003366;
+     border: none;
+     border-radius: 8px;
+     font-size: 1.1rem;
+     padding: 12px;
+     transition: background-color 0.3s ease;
+ }
+ 
+ .btn-primary:hover {
+     background-color: #0056b3;
+ }
+ 
+ .form-label {
+     font-weight: 500;
+     color: #333;
+ }
+ 
+ 
+ 
+ /* Mobile Responsive Adjustments */
+ @media (max-width: 768px) {
+     /* Sidebar */
+     .container.main-content {
+         padding-left: 20px; /* Reduced padding for smaller screens */
+     }
+     .container.main-content {
+         padding-left: 20px; /* Reduced padding for smaller screens */
+     }
+ 
+     /* Adjust sidebar for mobile */
+     #sidebar {
+         top:66px;
+         position: fixed;
+         width: 70px;
+         height: 100%;
+     }
+ 
+     #sidebar.open {
+         width: 250px;
+     }
+ 
+     #sidebar a span {
+         opacity: 0;
+         visibility: hidden;
+     }
+ 
+     #sidebar.open a span {
+         opacity: 1;
+         visibility: visible;
+     }
+ 
+     .main-content {
+         margin-left: 70px;
+     }
+ 
+     #sidebar.open ~ .main-content {
+         margin-left: 250px;
+     }
+ 
+  
+   
+ 
+     /* Form Card */
+     .form-card {
+         padding: 20px;
+         margin: 20px;
+     }
+ 
+     
+ }
+ 
+ 
+ /* Navbar Active State */
+ .navbar-nav .nav-item.active {
+     background-color: #1a73e8;
+     border-radius: 5px;
+ }
+ 
+ .navbar-nav .nav-item.active .nav-link {
+     color: #ffffff;
+     font-weight: bold;
+ }
+ 
+ .navbar-nav .nav-item.active .nav-link i {
+     color: #ffffff;
+ }
+ 
+ /* Hover Effects */
+ .navbar-nav .nav-item:hover {
+     background-color: #0056b3;
+     border-radius: 5px;
+ }
+ 
+ .validation-feedback {
+        color: red; /* Feedback color */
+        font-size: 0.875rem; /* Font size */
+        margin-top: 5px; /* Space between input and feedback */
+        display: block; /* Ensures the feedback is on a new line */
+    }
+     </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg  bg-primary navbar-dark">
+        <div class="container-fluid">
+            <!-- Sidebar Toggle Button and Logo -->
+            <div class="d-flex align-items-center">
+                <!-- Sidebar Toggle Button -->
+                <button class="btn btn-primary bg-primary  me-3" id="sidebarToggle"
+                    style="padding: 10px 15px; font-size: 1.2rem;">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <!-- Logo -->
+                <a class="navbar-brand d-flex align-items-center" href="#"
+                    style="color: #fff; font-weight: bold; font-size: 17px;">
+                    <i class="fas fa-shield-alt me-2"></i> SecureLife Insurance
+                </a>
+            </div>
+        </div>
+    </nav>
+
+
+
+
+    <!-- Sidebar -->
+    <!-- Sidebar -->
+    <nav id="sidebar">
+        <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
+            <h4 class="font-weight-bold text-uppercase mb-4" style="font-size: 1.2rem;">Menu</h4>
+
+        </div>
+        <ul class="navbar-nav">
+            <li class="nav-item ">
+                <a href="{% url 'agent_profile' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-tachometer-alt"></i>
+                    <span>Agent Profile</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'add_client' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-user-plus"></i>
+                    <span>Add Client</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'collected_clients' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-users"></i>
+                    <span>Collected Clients</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a href="{% url 'agent_assign_campaign' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-bullhorn"></i>
+                    <span>Assigned Campaigns</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="{% url 'logout_view' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+
+
+    <div class="main-content">
+        <div class="form-card mx-auto"
+            style="max-width: 800px; padding: 30px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);">
+            <div class="card-body">
+                  <!-- Message Section -->
+                  <div class="message-section mb-4">
+                    {% if messages %}
+                    {% for msg in messages %}
+                    <div class="alert alert-info" role="alert">{{ msg }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                <h2 class="text-center mb-4" style="font-weight: 700; color: #003366;">  <i class="fas fa-user-plus"></i> Add Campaign Client</h2>
+
+                <form method="POST" enctype="multipart/form-data" action="{% url 'add_campaign_client' campaign.id %}">
+                    {% csrf_token %}
+    
+                    
+                                   <!-- Basic Details Section -->
+                                   <div class="form-group mb-4">
+                                    <label for="name" class="form-label">Client Name</label>
+                                    <div class="input-group">
+                                        <div class="input-group-text">
+                                            <i class="fas fa-user"></i>
+                                        </div>
+                                        <input type="text" class="form-control form-control-lg" id="name" name="name" required
+                                            placeholder="Enter client name">
+                                    </div>
+                                    <small id="name_feedback" class="text-danger"></small>
+            
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label for="phone_number" class="form-label">Phone Number</label>
+                                    <div class="input-group">
+                                        <div class="input-group-text">
+                                            <i class="fas fa-phone-alt"></i>
+                                        </div>
+                                        <input type="text" class="form-control form-control-lg" id="phone_number"
+                                            name="phone_number" required placeholder="Enter phone number">
+                                    </div>
+                                    <!-- Feedback will be added here -->
+                                    <div id="phone_feedback" class=" text-danger"></div>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label for="address" class="form-label">Address</label>
+                                    <div class="input-group">
+                                        <div class="input-group-text">
+                                            <i class="fas fa-home"></i>
+                                        </div>
+                                        <textarea class="form-control" id="address" name="address" rows="3" required
+                                            placeholder="Enter address"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 form-group mb-4">
+                                        <label for="age" class="form-label">Age</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text">
+                                                <i class="fas fa-birthday-cake"></i>
+                                            </div>
+                                            <input type="number" class="form-control form-control-lg" id="age" name="age" required
+                                                placeholder="Enter age">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group mb-4">
+                                        <label for="dob" class="form-label">Date of Birth</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text">
+                                                <i class="fas fa-calendar-alt"></i>
+                                            </div>
+                                            <input type="date" class="form-control form-control-lg" id="dob" name="dob" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label for="profession" class="form-label">Profession</label>
+                                    <div class="input-group">
+                                        <div class="input-group-text">
+                                            <i class="fas fa-briefcase"></i>
+                                        </div>
+                                        <input type="text" class="form-control form-control-lg" id="profession" name="profession"
+                                            placeholder="Enter profession">
+                                    </div>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label for="qualification" class="form-label">Qualification</label>
+                                    <div class="input-group">
+                                        <div class="input-group-text">
+                                            <i class="fas fa-graduation-cap"></i>
+                                        </div>
+                                        <input type="text" class="form-control form-control-lg" id="qualification"
+                                            name="qualification" placeholder="Enter qualification">
+                                    </div>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label for="annual_income" class="form-label">Annual Income</label>
+                                    <div class="input-group">
+                                        <div class="input-group-text">
+                                            <i class="fas fa-dollar-sign"></i>
+                                        </div>
+                                        <input type="number" class="form-control form-control-lg" id="annual_income"
+                                            name="annual_income" placeholder="Enter annual income">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 form-group mb-4">
+                                        <label for="aadhar_number" class="form-label">Aadhar Card Number</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text">
+                                                <i class="fas fa-id-card"></i>
+                                            </div>
+                                            <input type="text" class="form-control form-control-lg" id="aadhar_number"
+                                                name="aadhar_number" placeholder="Enter Aadhar number">
+                                        </div>
+                                        <div id="aadhar_feedback" class=" text-danger"></div>
+                                    </div>
+            
+                                    <div class="col-md-6 form-group mb-4">
+                                        <label for="pan_number" class="form-label">PAN Card Number</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text">
+                                                <i class="fas fa-id-card"></i>
+                                            </div>
+                                            <input type="text" class="form-control form-control-lg" id="pan_number"
+                                                name="pan_number" placeholder="Enter PAN number">
+                                        </div>
+                                        <div id="pan_feedback" class=" text-danger"></div>
+                                    </div>
+            
+                                </div>
+            
+                                <!-- Additional Details Button -->
+                                <button type="button" class="btn btn-outline-secondary w-100 mb-4"
+                                    style="padding: 12px; font-weight: 600; border-radius: 5px;"
+                                    onclick="toggleAdditionalDetails()">
+                                    Show Additional Details
+                                </button>
+            
+                                <!-- Additional Details Section (Initially Hidden) -->
+                                <div id="additional-details" style="display: none;">
+                                    <div class="form-group mb-4">
+                                        <label for="income_level" class="form-label">Income Level</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text">
+                                                <i class="fas fa-wallet"></i>
+                                            </div>
+                                            <select class="form-control form-control-lg" id="income_level" name="income_level">
+                                                <option value="">Select income level</option>
+                                                <option value="low">Low</option>
+                                                <option value="medium">Medium</option>
+                                                <option value="high">High</option>
+                                            </select>
+                                        </div>
+                                    </div>
+            
+                                    <div class="form-group mb-4">
+                                        <label for="presence_of_kids" class="form-label">Presence of Kids</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text">
+                                                <i class="fas fa-child"></i>
+                                            </div>
+                                            <select class="form-control form-control-lg" id="presence_of_kids" name="presence_of_kids" required>
+                                                <option value="" {% if not presence_of_kids %} selected {% endif %}>Select option</option>
+                                                <option value="yes" {% if presence_of_kids == 'yes' %} selected {% endif %}>Yes</option>
+                                                <option value="no" {% if presence_of_kids == 'no' %} selected {% endif %}>No</option>
+                                            </select>
+                                            
+                                        </div>
+                                    </div>
+            
+                                    <div class="form-group mb-4">
+                                        <label for="number_of_dependents" class="form-label">Number of Dependents</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text">
+                                                <i class="fas fa-users"></i>
+                                            </div>
+                                            <input type="number" class="form-control form-control-lg" id="number_of_dependents"
+                                                name="number_of_dependents" placeholder="Enter number of dependents">
+                                        </div>
+                                    </div>
+            
+                                    <div class="form-group mb-4">
+                                        <label for="source_of_information" class="form-label">Source of Information</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text">
+                                                <i class="fas fa-info-circle"></i>
+                                            </div>
+                                            <input type="text" class="form-control form-control-lg" id="source_of_information"
+                                                name="source_of_information" placeholder="e.g., Advertisement, Referral">
+                                        </div>
+                                    </div>
+            
+                                    <div class="form-group mb-4">
+                                        <label for="employment_status" class="form-label">Employment Status</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text">
+                                                <i class="fas fa-briefcase"></i>
+                                            </div>
+                                            <select class="form-control form-control-lg" id="employment_status"
+                                                name="employment_status">
+                                                <option value="">Select employment status</option>
+                                                <option value="employed">Employed</option>
+                                                <option value="self_employed">Self-employed</option>
+                                                <option value="unemployed">Unemployed</option>
+                                                <option value="retired">Retired</option>
+                                            </select>
+                                        </div>
+                                    </div>
+            
+                                    <div class="form-group mb-4">
+                                        <label for="insurance_interests" class="form-label">Interested in Insurance Plans</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text">
+                                                <i class="fas fa-shield-alt"></i>
+                                            </div>
+                                            <select class="form-control form-control-lg" id="insurance_interests"
+                                                name="insurance_interests">
+                                                <option value="" disabled selected>Select Insurance Type</option>
+                                                <option value="health">Health Insurance</option>
+                                                <option value="life">Life Insurance</option>
+                                                <option value="vehicle">Vehicle Insurance</option>
+                                                <option value="home">Home Insurance</option>
+                                            </select>
+                                        </div>
+                                    </div>
+            
+                                    <div class="form-group mb-4">
+                                        <label for="additional_notes" class="form-label">Additional Notes</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text">
+                                                <i class="fas fa-comment-dots"></i>
+                                            </div>
+                                            <textarea class="form-control" id="additional_notes" name="additional_notes" rows="3"
+                                                placeholder="Enter any additional notes"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Profile Image Section -->
+                                <form method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="form-group mb-4">
+                                        <label for="profile_picture" class="form-label">Profile Image <span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <div class="input-group-text">
+                                                <i class="fas fa-image"></i>
+                                            </div>
+                                            <input type="file" class="form-control form-control-lg" id="profile_picture" name="profile_picture" accept="image/*">
+                                        </div>
+                                    </div>
+                                
+                                </form>
+                                
+            
+            
+            
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary w-100 btn-success" id="submit_button">Add Client</button>
+            
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+   
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const nameInput = document.getElementById("name");
+            const phoneInput = document.getElementById("phone_number");
+            const aadharInput = document.getElementById("aadhar_number");
+            const panInput = document.getElementById("pan_number");
+            const submitButton = document.getElementById("submit_button");
+            const form = document.querySelector("form");
+        
+            let isNameValid = true;
+            let isPhoneValid = true;
+            let isAadharValid = true;
+            let isPanValid = true;
+        
+            nameInput.addEventListener("input", function () {
+                validateName();
+                checkNameExistence(nameInput.value);
+            });
+        
+            phoneInput.addEventListener("input", validatePhoneNumber);
+            aadharInput.addEventListener("input", validateAadharNumber);
+            panInput.addEventListener("input", validatePanNumber);
+        
+            function validateName() {
+                const nameError = document.getElementById("name_feedback");
+                const name = nameInput.value.trim();
+        
+                if (!/^[a-zA-Z\s]{2,}$/.test(name)) {
+                    nameError.textContent = "Please enter a valid name (only letters, min 2 characters).";
+                    isNameValid = false;
+                } else {
+                    nameError.textContent = "";
+                    isNameValid = true;
+                }
+            }
+        
+            async function checkNameExistence(name) {
+                try {
+                    let response = await fetch(`/check_name/?name=${encodeURIComponent(name)}`);
+                    let data = await response.json();
+                    const nameError = document.getElementById("name_feedback");
+        
+                    if (data.exists) {
+                        nameError.textContent = "This name is already registered.";
+                        isNameValid = false;
+                    } else {
+                        nameError.textContent = "";
+                        isNameValid = true;
+                    }
+                } catch (error) {
+                    console.error("Error checking name:", error);
+                    isNameValid = false;
+                }
+            }
+        
+            function validatePhoneNumber() {
+                const phoneError = document.getElementById("phone_feedback");
+                const phoneNumber = phoneInput.value;
+        
+                if (!/^(\d{10})$/.test(phoneNumber)) {
+                    phoneError.textContent = "Please enter a valid 10-digit phone number.";
+                    isPhoneValid = false;
+                } else {
+                    phoneError.textContent = "";
+                    isPhoneValid = true;
+                }
+            }
+        
+            async function checkPhoneNumberExistence(phoneNumber) {
+                try {
+                    let response = await fetch(`/check_phone_number/?phone_number=${phoneNumber}`);
+                    let data = await response.json();
+                    const phoneError = document.getElementById("phone_feedback");
+        
+                    if (data.exists) {
+                        phoneError.textContent = "This phone number is already registered.";
+                        isPhoneValid = false;
+                    } else {
+                        phoneError.textContent = "";
+                        isPhoneValid = true;
+                    }
+                } catch (error) {
+                    console.error("Error checking phone number:", error);
+                    isPhoneValid = false;
+                }
+            }
+        
+            function validateAadharNumber() {
+                const aadharError = document.getElementById("aadhar_feedback");
+                const aadharNumber = aadharInput.value;
+        
+                if (!/^\d{12}$/.test(aadharNumber)) {
+                    aadharError.textContent = "Please enter a valid 12-digit Aadhar number.";
+                    isAadharValid = false;
+                } else {
+                    aadharError.textContent = "";
+                    isAadharValid = true;
+                }
+            }
+        
+            async function checkAadharNumberExistence(aadharNumber) {
+                try {
+                    let response = await fetch(`/check_aadhar_number/?aadhar_number=${aadharNumber}`);
+                    let data = await response.json();
+                    const aadharError = document.getElementById("aadhar_feedback");
+        
+                    if (data.exists) {
+                        aadharError.textContent = "This Aadhar number is already registered.";
+                        isAadharValid = false;
+                    } else {
+                        aadharError.textContent = "";
+                        isAadharValid = true;
+                    }
+                } catch (error) {
+                    console.error("Error checking Aadhar number:", error);
+                    isAadharValid = false;
+                }
+            }
+        
+            function validatePanNumber() {
+                const panError = document.getElementById("pan_feedback");
+                const panNumber = panInput.value;
+        
+                if (!/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(panNumber)) {
+                    panError.textContent = "Please enter a valid PAN number.";
+                    isPanValid = false;
+                } else {
+                    panError.textContent = "";
+                    isPanValid = true;
+                }
+            }
+        
+            async function checkPanNumberExistence(panNumber) {
+                try {
+                    let response = await fetch(`/check_pan_number/?pan_number=${panNumber}`);
+                    let data = await response.json();
+                    const panError = document.getElementById("pan_feedback");
+        
+                    if (data.exists) {
+                        panError.textContent = "This PAN number is already registered.";
+                        isPanValid = false;
+                    } else {
+                        panError.textContent = "";
+                        isPanValid = true;
+                    }
+                } catch (error) {
+                    console.error("Error checking PAN number:", error);
+                    isPanValid = false;
+                }
+            }
+        
+            // Trigger all validations before submitting the form
+            submitButton.addEventListener("click", async function (event) {
+                event.preventDefault(); // Prevent default form submission
+        
+                // Trigger all validation functions
+                validateName();
+                validatePhoneNumber();
+                validateAadharNumber();
+                validatePanNumber();
+        
+                // Wait for asynchronous validation checks to complete
+                await Promise.all([
+                    checkNameExistence(nameInput.value),
+                    checkPhoneNumberExistence(phoneInput.value),
+                    checkAadharNumberExistence(aadharInput.value),
+                    checkPanNumberExistence(panInput.value),
+                ]);
+        
+                // Submit the form only if there are no validation errors
+                if (isNameValid && isPhoneValid && isAadharValid && isPanValid) {
+                    form.submit(); // Actually submit the form
+                } else {
+                    console.log("Validation errors detected. Form not submitted.");
+                }
+            });
+        });
+        
+        </script>
+    
+    
+    
+    
+    
+    
+    <script>
+        function toggleAdditionalDetails() {
+            const additionalDetails = document.getElementById('additional-details');
+            if (additionalDetails.style.display === 'none' || !additionalDetails.style.display) {
+                additionalDetails.style.display = 'block';
+            } else {
+                additionalDetails.style.display = 'none';
+            }
+        }
+    </script>
+    
+
+
+
+
+
+   
+    
+    
+    
+
+
+
+
+
+    <script>
+        const toggleButton = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
+
+        toggleButton.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+
+        const links = sidebar.querySelectorAll('a');
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                links.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            });
+        });
+    </script>
+
+</body>
+
+</html>

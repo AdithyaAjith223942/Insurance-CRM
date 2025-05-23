@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Agent Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+    <style>
+        /* General Body and Layout Styling */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: #003366;
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1050;
+        }
+
+        .navbar-brand i {
+            font-size: 2.5rem;
+            margin-right: 10px;
+            color: #ffcc00;
+        }
+
+        .navbar-nav .nav-item.active {
+            background-color: #1a73e8;
+            /* Bright blue background for active item */
+            border-radius: 5px;
+            /* Rounded corners */
+        }
+
+        .navbar-nav .nav-item.active .nav-link {
+            color: #ffffff;
+            /* White text for active item */
+            font-weight: bold;
+            /* Bold text for active item */
+        }
+
+        .navbar-nav .nav-item.active .nav-link i {
+            color: #ffffff;
+            /* Icon color for active item */
+        }
+
+        /* Add hover effect for other items */
+        .navbar-nav .nav-item:hover {
+            background-color: #0056b3;
+            /* Dark blue background on hover */
+            border-radius: 5px;
+        }
+
+
+
+
+        /* Main Content Area Styling */
+        .main-content {
+            margin-left: 250px;
+            margin-top: 86px;
+            /* Account for the fixed navbar */
+            padding: 20px;
+        }
+
+        .agent-card {
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            transition: transform 0.3s, box-shadow 0.3s ease;
+        }
+
+        .agent-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-back {
+            background-color: #003366;
+            color: white;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: block;
+            text-align: center;
+            margin: 20px auto;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-back:hover {
+            background-color: #0051a3;
+        }
+
+
+
+        /* Styling for the Show More link */
+        .show-more-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #007bff;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .show-more-link:hover {
+            color: #0056b3;
+        }
+
+        /* Arrow icon rotation for Show More and Show Less */
+        .show-more-link:after {
+            content: " ▼";
+            transition: transform 0.3s ease;
+        }
+
+        .show-more-link.show-less:after {
+            content: " ▲";
+            transform: rotate(180deg);
+        }
+
+        #sidebar {
+            position: fixed;
+            top: 76px;
+            left: 0;
+            height: calc(100% - 56px);
+            width: 250px;
+            background-color: #003366;
+            color: white;
+            padding-top: 20px;
+            transition: width 0.3s ease, margin-left 0.3s ease;
+            overflow: hidden;
+        }
+
+        #sidebar.open {
+            width: 70px;
+        }
+
+        #sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #sidebar .nav-item {
+            margin-bottom: 1rem;
+        }
+
+        #sidebar a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        #sidebar a:hover,
+        #sidebar a.active {
+            background-color: #0056b3;
+        }
+
+        #sidebar i {
+            font-size: 1.5rem;
+            text-align: center;
+            width: 40px;
+        }
+
+        #sidebar a span {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            opacity: 1;
+            visibility: visible;
+            white-space: nowrap;
+        }
+
+        #sidebar.open a span {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            transition: margin-left 0.3s ease;
+            padding: 20px;
+        }
+
+        #sidebar.open~.main-content {
+            margin-left: 70px;
+        }
+
+
+        /* Main Content Styling */
+        .main-content {
+            margin-left: 250px;
+            margin-top: 76px;
+            padding: 20px;
+            transition: margin-left 0.3s ease;
+        }
+
+
+        .container.main-content {
+            padding-left: 200px;
+            /* Adjust padding for larger screens */
+        }
+
+        @media (max-width: 500px) {
+            #sidebar {
+                position: fixed;
+                width: 70px;
+                height: 100%;
+            }
+
+            #sidebar.open {
+                width: 250px;
+            }
+
+            #sidebar a span {
+                opacity: 0;
+                visibility: hidden;
+            }
+
+            #sidebar.open a span {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .main-content {
+                margin-left: 27%;
+                /* No left margin on mobile */
+                margin-top: 56px;
+                padding: 10px;
+                /* Adjust padding */
+                width: 65%;
+                /* Ensure full width */
+                text-align: center;
+                /* Center text */
+
+            }
+
+            .container.main-content {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            /* Adjust cards for mobile screens */
+            .col-12.col-md-4.mb-4 {
+                margin-bottom: 10px;
+            }
+        }
+
+        /* Small screens (500px - 609px) */
+        @media (min-width: 500px) and (max-width: 609px) {
+            #sidebar {
+                position: fixed;
+                width: 70px;
+                height: 100%;
+            }
+
+            #sidebar.open {
+                width: 150px;
+            }
+
+            #sidebar a span {
+                opacity: 0;
+                visibility: hidden;
+            }
+
+            #sidebar.open a span {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .main-content {
+                margin-left: 17%;
+                /* No left margin on mobile */
+                margin-top: 56px;
+                padding: 15px;
+                /* Adjust padding for small screens */
+                width: 80%;
+                /* Ensure full width */
+                text-align: center;
+                /* Center text */
+
+            }
+
+            .container.main-content {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            /* Adjust cards for small screens */
+            .col-12.col-md-4.mb-4 {
+                margin-bottom: 10px;
+            }
+        }
+
+        /* Medium screens (610px - 875px) */
+        @media (min-width: 610px) and (max-width: 875px) {
+            #sidebar {
+                position: fixed;
+                width: 70px;
+                height: 100%;
+            }
+
+            #sidebar.open {
+                width: 250px;
+            }
+
+            #sidebar a span {
+                opacity: 0;
+                visibility: hidden;
+            }
+
+            #sidebar.open a span {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .main-content {
+                margin-left: 16%;
+                /* No left margin on mobile */
+                margin-top: 56px;
+                padding: 20px;
+                /* Adjust padding */
+                width: 500px;
+                /* Ensure full width minus sidebar */
+                max-width: 900px;
+                text-align: center;
+                /* Center text */
+
+            }
+
+            .container.main-content {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .col-12.col-md-4.mb-4 {
+                margin-bottom: 20px;
+            }
+        }
+
+        /* Large screens (above 875px) */
+        @media (min-width: 875px) {
+            #sidebar {
+                width: 250px;
+                position: fixed;
+                height: 100%;
+            }
+
+            .main-content {
+                margin-left: 32%;
+                /* No left margin on mobile */
+                margin-top: 56px;
+                padding: 30px;
+                width: 65%;
+                /* Adjust content width */
+                max-width: 1000px;
+
+            }
+
+            .container.main-content {
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+
+            .col-12.col-md-4.mb-4 {
+                margin-bottom: 30px;
+            }
+        }
+
+        /* Very large screens (above 1280px) */
+        @media (min-width: 1280px) {
+            #sidebar {
+                width: 250px;
+                position: fixed;
+                height: 100%;
+            }
+
+            .main-content {
+                margin-left: 22%;
+                /* No left margin on mobile */
+                margin-top: 56px;
+                padding: 30px;
+                width: 65%;
+                /* Adjust content width */
+                max-width: 1000px;
+
+            }
+
+            .container.main-content {
+                padding-left: 40px;
+                padding-right: 40px;
+            }
+
+            .col-12.col-md-4.mb-4 {
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-primary navbar-dark">
+        <div class="container-fluid">
+            <div class="d-flex align-items-center">
+                <button class="btn btn-primary bg-primary me-3" id="sidebarToggle"
+                    style="padding: 10px 15px; font-size: 1.2rem;">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <a class="navbar-brand d-flex align-items-center" href="#"
+                    style="color: #fff; font-weight: bold; font-size: 17px;">
+                    <i class="fas fa-shield-alt me-2"></i> SecureLife Insurance
+                </a>
+            </div>
+        </div>
+    </nav>
+
+
+
+
+
+
+    <!-- Sidebar -->
+    <nav id="sidebar">
+        <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
+            <h4 class="font-weight-bold text-uppercase mb-4" style="font-size: 1.2rem;">Menu</h4>
+
+        </div>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a href="{% url 'admin_home' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-tachometer-alt"></i>
+                    <span>Admin Home</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'add_agent' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-user-plus"></i>
+                    <span>Add Agents</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a href="{% url 'view_agents' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-users"></i>
+                    <span>View Agents</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'create_campaign' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-bullhorn"></i>
+                    <span>Add Campaign</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'admin_view_campaign' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-clipboard-list"></i>
+                    <span>View Campaigns</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'logout_view' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <br>
+    <br>
+    <br>
+
+    <!-- Main Content Section -->
+    <div class="main-content mt-5">
+        <div class="row gy-4 justify-content-center">
+            <div class="col-md-8">
+                <div class="card border-0 shadow-sm p-4" style="border-radius: 12px; background-color: #ffffff;">
+                    <!-- Message Section -->
+                    <div class="message-section mb-4">
+                        {% if messages %}
+                        {% for msg in messages %}
+                        <div class="alert alert-info" role="alert">{{ msg }}</div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <!-- Header Section -->
+                    <h4 class="text-center fw-bold text-primary mb-4">Edit Agent Details</h4>
+
+
+
+
+                    <!-- Agent Edit Form -->
+                    <form method="POST" action="{% url 'update_edit_agent' agent.id %}" id="edit_agent_form"
+                        enctype="multipart/form-data">
+                        {% csrf_token %}
+
+
+                        <!-- Editable Profile Picture -->
+                        <div class="text-center mb-4 position-relative">
+                            <label for="profile_picture_input" class="position-relative d-inline-block cursor-pointer">
+                                {% if agent.profile_picture %}
+                                <img id="profile_picture_preview" src="{{ agent.profile_picture.url }}"
+                                    alt="Agent Profile Picture" class="img-fluid rounded-circle"
+                                    style="width: 150px; height: 150px; object-fit: cover; border: 4px solid #003366; cursor: pointer;">
+                                {% else %}
+                                <div id="default_icon"
+                                    class="d-flex justify-content-center align-items-center rounded-circle shadow"
+                                    style="width: 150px; height: 150px; background-color: #f8f9fa; border: 4px solid #003366; cursor: pointer;">
+                                    <i class="fas fa-user-circle" style="font-size: 80px; color: #6c757d;"></i>
+                                </div>
+                                {% endif %}
+                                <input type="file" id="profile_picture_input" name="profile_picture" class="d-none"
+                                    accept="image/*">
+                            </label>
+
+                            <!-- Camera Icon -->
+                            <label for="profile_picture_input" class="position-absolute"
+                                style="bottom: 10px; right: 35%; background: #003366; color: white; padding: 8px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                                <i class="fas fa-camera" style="font-size: 16px;"></i>
+                            </label>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <label class="form-label fw-semibold">Full Name</label>
+                                <input type="text" id="name" name="name" class="form-control" value="{{ agent.name }}"
+                                    required>
+                                <div id="name_feedback" class="invalid-feedback"></div>
+                            </div>
+
+                            <div class="col-12 mb-3">
+                                <label class="form-label fw-semibold">Location</label>
+                                <input type="text" id="location" name="location" class="form-control"
+                                    value="{{ agent.location }}" required>
+                            </div>
+
+                            <div class="col-12 mb-3">
+                                <label class="form-label fw-semibold">Phone Number</label>
+                                <input type="text" id="phone_number" name="phone_number" class="form-control"
+                                    value="{{ agent.phone_number }}" required>
+                                <div id="phone_feedback" class="invalid-feedback"></div>
+                            </div>
+
+                            <div class="col-12 mb-3">
+                                <label class="form-label fw-semibold">Address</label>
+                                <input type="text" id="address" name="address" class="form-control"
+                                    value="{{ agent.address }}" required>
+                            </div>
+
+                            <div class="col-12 mb-3">
+                                <label class="form-label fw-semibold">Email</label>
+                                <input type="email" id="email" name="email" class="form-control"
+                                    value="{{ agent.email }}" required>
+                                <div id="email_feedback" class="invalid-feedback"></div>
+                            </div>
+
+                            <div class="col-12 mb-3">
+                                <label class="form-label fw-semibold">Department</label>
+                                <input type="text" id="department" name="department" class="form-control"
+                                    value="{{ agent.department }}" required>
+                            </div>
+                        </div>
+
+                        <!-- Buttons Section -->
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="{% url 'edit_agent' agent.id %}" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary" id="save_changes_button">
+                                <i class="fas fa-save me-2"></i>Save Changes
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let saveButton = document.getElementById("save_changes_button");
+            let form = document.getElementById("edit_agent_form");
+    
+            // Get initial values from the form fields
+            let initialValues = {
+                phone_number: document.getElementById("phone_number").value.trim(),
+                email: document.getElementById("email").value.trim(),
+            };
+    
+            // Track changes to fields
+            let fieldsEdited = { phone_number: false, email: false };
+    
+            // Attach event listeners for live validation
+            document.getElementById("phone_number").addEventListener("input", function () {
+                fieldsEdited.phone_number = this.value.trim() !== initialValues.phone_number;
+                validatePhoneNumberLive();
+            });
+    
+            document.getElementById("email").addEventListener("input", function () {
+                fieldsEdited.email = this.value.trim() !== initialValues.email;
+                validateEmailLive();
+            });
+    
+            // Click event to validate and submit the form
+            saveButton.addEventListener("click", async function (event) {
+                event.preventDefault(); // Prevent default form submission
+    
+                // Check if at least one field was edited
+                if (!fieldsEdited.phone_number && !fieldsEdited.email) {
+                    form.submit(); // No edits, submit the form as is
+                    return;
+                }
+    
+                // Validate only edited fields
+                let validationResults = await Promise.all([
+                    fieldsEdited.phone_number ? validatePhoneNumber() : true,
+                    fieldsEdited.email ? validateEmail() : true
+                ]);
+    
+                // If all edited fields pass validation, submit the form
+                if (validationResults.every(result => result === true)) {
+                    form.submit();
+                }
+            });
+    
+            // Live Phone Number Validation
+            function validatePhoneNumberLive() {
+                let phoneField = document.getElementById("phone_number");
+                let phone = phoneField.value.trim();
+                let phoneFeedback = document.getElementById("phone_feedback");
+                let phoneRegex = /^\d{10}$/; // Allows any 10-digit number
+    
+                phoneField.classList.remove("is-invalid");
+                phoneFeedback.textContent = "";
+    
+                if (!phoneRegex.test(phone)) {
+                    phoneField.classList.add("is-invalid");
+                    phoneFeedback.textContent = "Phone number must be exactly 10 digits.";
+                    return false;
+                }
+    
+                return true;
+            }
+    
+            // Validate Phone Number with Database Check
+            async function validatePhoneNumber() {
+                let phoneField = document.getElementById("phone_number");
+                let phone = phoneField.value.trim();
+    
+                if (!validatePhoneNumberLive()) {
+                    return false;
+                }
+    
+                return phone !== initialValues.phone_number ? await checkPhoneNumberExistence(phone) : true;
+            }
+    
+            // Live Email Validation (Ensures '@' and '.com')
+            function validateEmailLive() {
+                let emailField = document.getElementById("email");
+                let email = emailField.value.trim();
+                let emailFeedback = document.getElementById("email_feedback");
+    
+                emailField.classList.remove("is-invalid");
+                emailFeedback.textContent = "";
+    
+                if (!email.includes("@")) {
+                    emailField.classList.add("is-invalid");
+                    emailFeedback.textContent = "Email must contain '@'.";
+                    return false;
+                }
+    
+                if (!email.endsWith(".com")) {
+                    emailField.classList.add("is-invalid");
+                    emailFeedback.textContent = "Email must end with '.com'.";
+                    return false;
+                }
+    
+                return true;
+            }
+    
+            // Validate Email with Database Check
+            async function validateEmail() {
+                let emailField = document.getElementById("email");
+                let email = emailField.value.trim();
+    
+                if (!validateEmailLive()) {
+                    return false;
+                }
+    
+                return email !== initialValues.email ? await checkEmailExistence(email) : true;
+            }
+    
+            // Function to check if phone number already exists in the database
+            async function checkPhoneNumberExistence(phone_number) {
+                try {
+                    let response = await fetch(`/check-phone-number-existence/?phone_number=${phone_number}`);
+                    let data = await response.json();
+                    let phoneField = document.getElementById("phone_number");
+                    let phoneFeedback = document.getElementById("phone_feedback");
+    
+                    if (data.exists) {
+                        phoneField.classList.add("is-invalid");
+                        phoneFeedback.textContent = "Phone number is already registered.";
+                        return false;
+                    }
+                    return true;
+                } catch (error) {
+                    console.error('Error checking phone number existence:', error);
+                    return false;
+                }
+            }
+    
+            // Function to check if email already exists in the database
+            async function checkEmailExistence(email) {
+                try {
+                    let response = await fetch(`/check-email-existence/?email=${email}`);
+                    let data = await response.json();
+                    let emailField = document.getElementById("email");
+                    let emailFeedback = document.getElementById("email_feedback");
+    
+                    if (data.exists) {
+                        emailField.classList.add("is-invalid");
+                        emailFeedback.textContent = "Email is already registered.";
+                        return false;
+                    }
+                    return true;
+                } catch (error) {
+                    console.error('Error checking email existence:', error);
+                    return false;
+                }
+            }
+        });
+    </script>
+    
+        
+    
+    
+    
+
+
+
+
+
+
+<script>
+    document.getElementById('profile_picture_input').addEventListener('change', function (event) {
+        const file = event.target.files[0];
+    
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                // Set preview image source to the new uploaded file
+                document.getElementById('profile_picture_preview').src = e.target.result;
+    
+                // Hide the default icon if an image is uploaded
+                const defaultIcon = document.getElementById('default_icon');
+                if (defaultIcon) {
+                    defaultIcon.style.display = 'none';
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+    </script>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- JavaScript to Enable Editing -->
+
+
+
+
+
+
+    <br>
+    <br>
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+
+    <!-- Footer -->
+
+
+    <!-- Location Tracking Script -->
+
+    <script>
+        const toggleButton = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
+
+        toggleButton.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+
+        const links = sidebar.querySelectorAll('a');
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                links.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            });
+        });
+    </script>
+
+</body>
+
+</html>

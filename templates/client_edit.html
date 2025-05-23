@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Agent Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+
+    <style>
+        /* General Body and Layout Styling */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            overflow-x: hidden;
+        }
+    
+        /* Navbar Styling */
+        .navbar {
+            background-color: #003366;
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1050;
+        }
+        
+        .navbar-brand i {
+            font-size: 2.5rem;
+            margin-right: 10px;
+            color: #ffcc00;
+        }
+        .navbar-nav .nav-item.active {
+    background-color: #1a73e8;  /* Bright blue background for active item */
+    border-radius: 5px;          /* Rounded corners */
+}
+
+.navbar-nav .nav-item.active .nav-link {
+    color: #ffffff;             /* White text for active item */
+    font-weight: bold;          /* Bold text for active item */
+}
+
+.navbar-nav .nav-item.active .nav-link i {
+    color: #ffffff;             /* Icon color for active item */
+}
+
+/* Add hover effect for other items */
+.navbar-nav .nav-item:hover {
+    background-color: #0056b3;  /* Dark blue background on hover */
+    border-radius: 5px;
+}
+    
+    
+
+    
+        /* Main Content Area Styling */
+        .main-content {
+            margin-left: 250px;
+            margin-top: 86px; /* Account for the fixed navbar */
+            padding: 20px;
+        }
+    
+        .agent-card {
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            transition: transform 0.3s, box-shadow 0.3s ease;
+        }
+    
+        .agent-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+    
+        .btn-back {
+            background-color: #003366;
+            color: white;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: block;
+            text-align: center;
+            margin: 20px auto;
+            transition: background-color 0.3s ease;
+        }
+    
+        .btn-back:hover {
+            background-color: #0051a3;
+        }
+    
+      
+      
+        /* Styling for the Show More link */
+.show-more-link {
+    display: inline-block;
+    margin-top: 10px;
+    color: #007bff;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.show-more-link:hover {
+    color: #0056b3;
+}
+
+/* Arrow icon rotation for Show More and Show Less */
+.show-more-link:after {
+    content: " ▼";
+    transition: transform 0.3s ease;
+}
+
+.show-more-link.show-less:after {
+    content: " ▲";
+    transform: rotate(180deg);
+}
+
+#sidebar {
+    position: fixed;
+    top: 76px;
+    left: 0;
+    height: calc(100% - 56px);
+    width: 250px;
+    background-color: #003366;
+    color: white;
+    padding-top: 20px;
+    transition: width 0.3s ease, margin-left 0.3s ease;
+    overflow: hidden;
+}
+
+#sidebar.open {
+    width: 70px;
+}
+
+#sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+#sidebar .nav-item {
+    margin-bottom: 1rem;
+}
+
+#sidebar a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+#sidebar a:hover,
+#sidebar a.active {
+    background-color: #0056b3;
+}
+
+#sidebar i {
+    font-size: 1.5rem;
+    text-align: center;
+    width: 40px;
+}
+
+#sidebar a span {
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    opacity: 1;
+    visibility: visible;
+    white-space: nowrap;
+}
+
+#sidebar.open a span {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.main-content {
+    margin-left: 250px;
+    transition: margin-left 0.3s ease;
+    padding: 20px;
+}
+
+#sidebar.open ~ .main-content {
+    margin-left: 70px;
+}
+
+
+/* Main Content Styling */
+.main-content {
+            margin-left: 250px;
+            margin-top: 76px;
+            padding: 20px;
+            transition: margin-left 0.3s ease;
+        }
+
+
+        .container.main-content {
+    padding-left: 200px;  /* Adjust padding for larger screens */
+}
+@media (max-width: 500px) {
+    #sidebar {
+        position: fixed;
+        width: 70px;
+        height: 100%;
+    }
+
+    #sidebar.open {
+        width: 250px;
+    }
+
+    #sidebar a span {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    #sidebar.open a span {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .main-content {
+        margin-left: 27%; /* No left margin on mobile */
+        margin-top: 56px;
+        padding: 10px; /* Adjust padding */
+        width: 65%; /* Ensure full width */
+        text-align: center; /* Center text */
+
+    }
+
+    .container.main-content {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    /* Adjust cards for mobile screens */
+    .col-12.col-md-4.mb-4 {
+        margin-bottom: 10px;
+    }
+}
+
+/* Small screens (500px - 609px) */
+@media (min-width: 500px) and (max-width: 609px) {
+    #sidebar {
+        position: fixed;
+        width: 70px;
+        height: 100%;
+    }
+
+    #sidebar.open {
+        width: 150px;
+    }
+
+    #sidebar a span {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    #sidebar.open a span {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .main-content {
+        margin-left: 17%; /* No left margin on mobile */
+        margin-top: 56px;
+        padding: 15px; /* Adjust padding for small screens */
+        width: 80%; /* Ensure full width */
+        text-align: center; /* Center text */
+        
+    }
+
+    .container.main-content {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    /* Adjust cards for small screens */
+    .col-12.col-md-4.mb-4 {
+        margin-bottom: 10px;
+    }
+}
+
+/* Medium screens (610px - 875px) */
+@media (min-width: 610px) and (max-width: 875px) {
+    #sidebar {
+        position: fixed;
+        width: 70px;
+        height: 100%;
+    }
+
+    #sidebar.open {
+        width: 250px;
+    }
+
+    #sidebar a span {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    #sidebar.open a span {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .main-content {
+        margin-left: 16%; /* No left margin on mobile */
+        margin-top: 56px;
+        padding: 20px; /* Adjust padding */
+        width: 500px; /* Ensure full width minus sidebar */
+        max-width: 900px;
+        text-align: center; /* Center text */
+       
+    }
+
+    .container.main-content {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .col-12.col-md-4.mb-4 {
+        margin-bottom: 20px;
+    }
+}
+
+/* Large screens (above 875px) */
+@media (min-width: 875px) {
+    #sidebar {
+        width: 250px;
+        position: fixed;
+        height: 100%;
+    }
+
+    .main-content {
+        margin-left: 32%; /* No left margin on mobile */
+        margin-top: 56px;
+        padding: 30px;
+        width: 65%;  /* Adjust content width */
+        max-width: 1000px;
+        
+    }
+
+    .container.main-content {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    .col-12.col-md-4.mb-4 {
+        margin-bottom: 30px;
+    }
+}
+
+/* Very large screens (above 1280px) */
+@media (min-width: 1280px) {
+    #sidebar {
+        width: 250px;
+        position: fixed;
+        height: 100%;
+    }
+
+    .main-content {
+        margin-left: 22%; /* No left margin on mobile */
+        margin-top: 56px;
+        padding: 30px;
+        width: 65%;  /* Adjust content width */
+        max-width: 1000px;
+        
+    }
+
+    .container.main-content {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    .col-12.col-md-4.mb-4 {
+        margin-bottom: 30px;
+    }
+}
+
+    </style>
+    
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-primary navbar-dark">
+        <div class="container-fluid">
+            <div class="d-flex align-items-center">
+                <button class="btn btn-primary bg-primary me-3" id="sidebarToggle"
+                    style="padding: 10px 15px; font-size: 1.2rem;">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <a class="navbar-brand d-flex align-items-center" href="#"
+                    style="color: #fff; font-weight: bold; font-size: 17px;">
+                    <i class="fas fa-shield-alt me-2"></i> SecureLife Insurance
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+
+    
+
+
+
+<!-- Sidebar -->
+<nav id="sidebar">
+    <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
+        <h4 class="font-weight-bold text-uppercase mb-4" style="font-size: 1.2rem;">Menu</h4>
+
+    </div>
+    <ul class="navbar-nav">
+        <li class="nav-item ">
+            <a href="{% url 'agent_profile' %}" class="nav-link d-flex align-items-center gap-3">
+                <i class="fa fa-tachometer-alt"></i>
+                <span>Agent Profile</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'add_client' %}" class="nav-link d-flex align-items-center gap-3">
+                <i class="fa fa-user-plus"></i>
+                <span>Add Client</span>
+            </a>
+        </li>
+        <li class="nav-item active">
+            <a href="{% url 'collected_clients' %}" class="nav-link d-flex align-items-center gap-3">
+                <i class="fa fa-users"></i>
+                <span>Collected Clients</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'agent_assign_campaign' %}" class="nav-link d-flex align-items-center gap-3">
+                <i class="fa fa-bullhorn"></i>
+                <span>Assigned Campaigns</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{% url 'logout_view' %}" class="nav-link d-flex align-items-center gap-3">
+                <i class="fa fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+    <br>
+    <br>
+    <br>
+     
+
+
+<!-- Main Content Section -->
+<div class="main-content">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-8">
+            <div class="client-card shadow-lg rounded-lg p-4" style="background-color: #fff; border-radius: 15px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+
+                <!-- Message Section -->
+                <div class="message-section mb-4">
+                    {% if messages %}
+                    {% for msg in messages %}
+                    <div class="alert alert-info" role="alert">{{ msg }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+
+                <!-- Client's Profile Picture -->
+                <div class="text-center mb-4">
+                    <div class="position-relative d-inline-block">
+                        <img id="profile-pic-preview" 
+                             src="{{ client.profile_picture.url }}" 
+                             alt="Client Profile Picture" 
+                             class="img-fluid rounded-circle" 
+                             style="width: 150px; height: 150px; object-fit: cover; border: 4px solid #003366;">
+                    </div>
+                </div>
+
+                <!-- Edit Client Form -->
+                <form method="POST" enctype="multipart/form-data" action="{% url 'client_edit' client.id %}">
+                    {% csrf_token %}
+                    
+                    <!-- Client Name and Address -->
+                    <div class="form-group mb-3">
+                        <label for="name">Client Name</label>
+                        <input type="text" name="name" class="form-control" value="{{ client.name }}">
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="address">Address</label>
+                        <input type="text" name="address" class="form-control" value="{{ client.address }}">
+                    </div>
+
+                    <!-- Client Basic Information -->
+                    <div class="form-group mb-3">
+                        <label for="phone_number">Phone Number</label>
+                        <input type="text" name="phone_number" class="form-control" value="{{ client.phone_number }}">
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="age">Age</label>
+                        <input type="number" name="age" class="form-control" value="{{ client.age }}">
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="dob">Date of Birth</label>
+                        <input type="date" name="dob" class="form-control" value="{{ client.dob|date:'Y-m-d' }}">
+                    </div>
+
+                    <!-- Additional Information -->
+                    <div class="form-group mb-3">
+                        <label for="profession">Profession</label>
+                        <input type="text" name="profession" class="form-control" value="{{ client.profession }}">
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="qualification">Qualification</label>
+                        <input type="text" name="qualification" class="form-control" value="{{ client.qualification }}">
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="annual_income">Annual Income</label>
+                        <input type="number" name="annual_income" class="form-control" value="{{ client.annual_income }}">
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="aadhar_number">Aadhar Card Number</label>
+                        <input type="text" name="aadhar_number" class="form-control" value="{{ client.aadhar_number }}">
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="pan_number">PAN Card Number</label>
+                        <input type="text" name="pan_number" class="form-control" value="{{ client.pan_number }}">
+                    </div>
+
+                    <!-- Additional Fields (Income Level, Presence of Kids, etc.) -->
+                    <div class="form-group mb-3">
+                        <label for="income_level">Income Level</label>
+                        <select name="income_level" class="form-control">
+                            <option value="Low" {% if client.income_level == "Low" %}selected{% endif %}>Low</option>
+                            <option value="Medium" {% if client.income_level == "Medium" %}selected{% endif %}>Medium</option>
+                            <option value="High" {% if client.income_level == "High" %}selected{% endif %}>High</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="presence_of_kids">Presence of Kids</label>
+                        <select name="presence_of_kids" class="form-control">
+                            <option value="Yes" {% if client.presence_of_kids == "Yes" %}selected{% endif %}>Yes</option>
+                            <option value="No" {% if client.presence_of_kids == "No" %}selected{% endif %}>No</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="number_of_dependents">Number of Dependents</label>
+                        <input type="number" name="number_of_dependents" class="form-control" value="{{ client.number_of_dependents }}">
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="source_of_information">Source of Information</label>
+                        <select name="source_of_information" class="form-control">
+                            <option value="Online" {% if client.source_of_information == "Online" %}selected{% endif %}>Online</option>
+                            <option value="Referral" {% if client.source_of_information == "Referral" %}selected{% endif %}>Referral</option>
+                            <option value="Advertisement" {% if client.source_of_information == "Advertisement" %}selected{% endif %}>Advertisement</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="employment_status">Employment Status</label>
+                        <select name="employment_status" class="form-control">
+                            <option value="Employed" {% if client.employment_status == "Employed" %}selected{% endif %}>Employed</option>
+                            <option value="Self-Employed" {% if client.employment_status == "Self-Employed" %}selected{% endif %}>Self-Employed</option>
+                            <option value="Unemployed" {% if client.employment_status == "Unemployed" %}selected{% endif %}>Unemployed</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="insurance_interests">Interested in Insurance</label>
+                        <select name="insurance_interests" class="form-control">
+                            <option value="Yes" {% if client.insurance_interests == "Yes" %}selected{% endif %}>Yes</option>
+                            <option value="No" {% if client.insurance_interests == "No" %}selected{% endif %}>No</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="additional_notes">Additional Notes</label>
+                        <textarea name="additional_notes" class="form-control" rows="4">{{ client.additional_notes }}</textarea>
+                    </div>
+
+                    <!-- Profile Picture -->
+                    <div class="form-group mb-3">
+                        <label for="profile_picture">Profile Picture</label>
+                        <input type="file" name="profile_picture" class="form-control">
+                    </div>
+
+                    <!-- Save Changes Button -->
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-success" style="padding: 12px 25px; font-weight: 600; border-radius: 8px; background-color: #28a745; color: white;">Save Changes</button>
+                    </div>
+                </form>
+
+                <!-- Back Button -->
+                <div class="text-center mt-4">
+                    <a href="{% url 'client_view' client.id %}" class="btn btn-secondary" style="padding: 12px 25px; font-weight: 600; border-radius: 8px;">Back to Client</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+    
+    
+
+    <br>
+    <br>
+
+<br>
+<br>
+<br>
+<br>
+
+
+
+    <!-- Footer -->
+
+
+    <!-- Location Tracking Script -->
+   
+    <script>
+        const toggleButton = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
+
+        toggleButton.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+
+        const links = sidebar.querySelectorAll('a');
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                links.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            });
+        });
+    </script>
+
+</body>
+</html>

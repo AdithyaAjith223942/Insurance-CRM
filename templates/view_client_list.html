@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>View Agents</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        /* General Body and Layout Styling */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            background-color: #003366;
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1050;
+        }
+
+        /* Card Styling */
+
+
+        #sidebar {
+            position: fixed;
+            top: 76px;
+            left: 0;
+            height: calc(100% - 56px);
+            width: 250px;
+            background-color: #003366;
+            color: white;
+            padding-top: 20px;
+            transition: width 0.3s ease, margin-left 0.3s ease;
+            overflow: hidden;
+        }
+
+        #sidebar.open {
+            width: 70px;
+        }
+
+        #sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #sidebar .nav-item {
+            margin-bottom: 1rem;
+        }
+
+        #sidebar a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        #sidebar a:hover,
+        #sidebar a.active {
+            background-color: #0056b3;
+        }
+
+        #sidebar i {
+            font-size: 1.5rem;
+            text-align: center;
+            width: 40px;
+        }
+
+        #sidebar a span {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            opacity: 1;
+            visibility: visible;
+            white-space: nowrap;
+        }
+
+        #sidebar.open a span {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            transition: margin-left 0.3s ease;
+            padding: 20px;
+        }
+
+        #sidebar.open~.main-content {
+            margin-left: 70px;
+        }
+
+        /* Card Styling */
+        .card {
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid #004085;
+            height: 100%;
+            /* Ensures uniform height */
+        }
+
+        .card-img-top {
+            height: 220px;
+            object-fit: cover;
+        }
+
+        /* Card Body */
+        .card-body {
+            background-color: #ffffff;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .card-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .card-body p {
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        /* Main Content Styling */
+
+
+
+        /* Main Content */
+        .main-content {
+            margin-left: 120px;
+            /* Default sidebar width */
+            margin-top: 66px;
+            /* Navbar height */
+            padding-top: 20px;
+            padding: 20px;
+            transition: margin-left 0.3s ease;
+            overflow: hidden;
+
+        }
+
+        #sidebar.close~.main-content {
+            margin-left: 100px;
+            /* Adjust for minimized sidebar */
+        }
+
+        .container.main-content {
+            padding-left: 200px;
+            /* Adjust padding for larger screens */
+        }
+
+
+
+
+
+
+
+
+        .navbar-brand i {
+            font-size: 2.5rem;
+            /* Icon size */
+            margin-right: 10px;
+            color: #ffcc00;
+            /* Icon color */
+        }
+
+        /* Highlight active menu item */
+        .navbar-nav .nav-item.active {
+            background-color: #1a73e8;
+            /* Bright blue background for active item */
+            border-radius: 5px;
+            /* Rounded corners */
+        }
+
+        .navbar-nav .nav-item.active .nav-link {
+            color: #ffffff;
+            /* White text for active item */
+            font-weight: bold;
+            /* Bold text for active item */
+        }
+
+        .navbar-nav .nav-item.active .nav-link i {
+            color: #ffffff;
+            /* Icon color for active item */
+        }
+
+        /* Add hover effect for other items */
+        .navbar-nav .nav-item:hover {
+            background-color: #0056b3;
+            /* Dark blue background on hover */
+            border-radius: 5px;
+        }
+
+
+        @media (max-width: 500px) {
+            #sidebar {
+                position: fixed;
+                width: 70px;
+                height: 100%;
+            }
+
+            #sidebar.open~.main-content {
+                margin-left: 300px;
+            }
+
+            #sidebar.open {
+                width: 250px;
+            }
+
+            #sidebar a span {
+                opacity: 0;
+                visibility: hidden;
+            }
+
+            #sidebar.open a span {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .main-content {
+                margin-left: 27%;
+                /* No left margin on mobile */
+                margin-top: 56px;
+                padding: 10px;
+                /* Adjust padding */
+                width: 65%;
+                /* Ensure full width */
+                text-align: center;
+                /* Center text */
+
+            }
+
+            .container.main-content {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            /* Adjust cards for mobile screens */
+            .col-12.col-md-4.mb-4 {
+                margin-bottom: 10px;
+            }
+        }
+
+        /* Small screens (500px - 609px) */
+        @media (min-width: 500px) and (max-width: 609px) {
+            #sidebar {
+                position: fixed;
+                width: 70px;
+                height: 100%;
+            }
+
+            #sidebar.open {
+                width: 150px;
+            }
+
+            #sidebar a span {
+                opacity: 0;
+                visibility: hidden;
+            }
+
+            #sidebar.open a span {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .main-content {
+                margin-left: 17%;
+                /* No left margin on mobile */
+                margin-top: 56px;
+                padding: 15px;
+                /* Adjust padding for small screens */
+                width: 80%;
+                /* Ensure full width */
+                text-align: center;
+                /* Center text */
+
+            }
+
+            .container.main-content {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            /* Adjust cards for small screens */
+            .col-12.col-md-4.mb-4 {
+                margin-bottom: 10px;
+            }
+        }
+
+        /* Medium screens (610px - 875px) */
+        @media (min-width: 610px) and (max-width: 875px) {
+            #sidebar {
+                position: fixed;
+                width: 70px;
+                height: 100%;
+            }
+
+            #sidebar.open {
+                width: 250px;
+            }
+
+            #sidebar a span {
+                opacity: 0;
+                visibility: hidden;
+            }
+
+            #sidebar.open a span {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .main-content {
+                margin-left: 16%;
+                /* No left margin on mobile */
+                margin-top: 56px;
+                padding: 20px;
+                /* Adjust padding */
+                width: 500px;
+                /* Ensure full width minus sidebar */
+                max-width: 900px;
+                text-align: center;
+                /* Center text */
+
+            }
+
+            .container.main-content {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .col-12.col-md-4.mb-4 {
+                margin-bottom: 20px;
+            }
+        }
+
+        /* Large screens (above 875px) */
+        @media (min-width: 875px) {
+            #sidebar {
+                width: 250px;
+                position: fixed;
+                height: 100%;
+            }
+
+            .main-content {
+                margin-left: 32%;
+                /* No left margin on mobile */
+                margin-top: 56px;
+                padding: 30px;
+                width: 65%;
+                /* Adjust content width */
+                max-width: 1000px;
+
+            }
+
+            .container.main-content {
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+
+            .col-12.col-md-4.mb-4 {
+                margin-bottom: 30px;
+            }
+        }
+
+        /* Very large screens (above 1280px) */
+        @media (min-width: 1280px) {
+            #sidebar {
+                width: 250px;
+                position: fixed;
+                height: 100%;
+            }
+
+            .main-content {
+                margin-left: 26%;
+                /* No left margin on mobile */
+                margin-top: 56px;
+                padding: 30px;
+                width: 65%;
+                /* Adjust content width */
+                max-width: 1000px;
+
+            }
+
+            .container.main-content {
+                padding-left: 40px;
+                padding-right: 40px;
+            }
+
+            .col-12.col-md-4.mb-4 .card {
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg bg-primary navbar-dark">
+        <div class="container-fluid">
+            <div class="d-flex align-items-center">
+                <button class="btn btn-primary bg-primary me-3" id="sidebarToggle"
+                    style="padding: 10px 15px; font-size: 1.2rem;">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <a class="navbar-brand d-flex align-items-center" href="#"
+                    style="color: #fff; font-weight: bold; font-size: 17px;">
+                    <i class="fas fa-shield-alt me-2"></i> SecureLife Insurance
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <nav id="sidebar">
+        <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
+            <h4 class="font-weight-bold text-uppercase mb-4" style="font-size: 1.2rem;">Menu</h4>
+
+        </div>
+        <ul class="navbar-nav">
+            <li class="nav-item ">
+                <a href="{% url 'admin_home' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-tachometer-alt"></i>
+                    <span>Admin Home</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'add_agent' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-user-plus"></i>
+                    <span>Add Agents</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a href="{% url 'view_agents' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-users"></i>
+                    <span>View Agents</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'create_campaign' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-bullhorn"></i>
+                    <span>Add Campaign</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'admin_view_campaign' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-clipboard-list"></i>
+                    <span>View Campaigns</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'logout_view' %}" class="nav-link d-flex align-items-center gap-3">
+                    <i class="fa fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+    {% load static %}
+
+    <div class="container main-content mt-5">
+        <h2 class="text-center fw-bold text-primary mb-4">Our Clients</h2>
+
+        <!-- Message Section -->
+        <div class="message-section mb-4">
+            {% if messages %}
+            {% for msg in messages %}
+            <div class="alert alert-info text-center" role="alert">{{ msg }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="row gy-4 justify-content-center">
+            {% for client in clients %}
+            <div class="col-lg-4 col-md-6">
+                <div class="card border shadow-sm"
+                    style="border-radius: 12px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; border: 2px solid #004085;">
+
+                    <!-- Client Profile Picture or Default Icon -->
+                    {% if client.profile_picture %}
+                    <img src="{{ client.profile_picture.url }}" class="card-img-top" alt="Client Image"
+                        style="height: 220px; object-fit: cover;">
+                    {% else %}
+                    <div class="d-flex justify-content-center align-items-center"
+                        style="height: 220px; background-color: #f8f9fa;">
+                        <i class="fas fa-user-circle" style="font-size: 100px; color: #6c757d;"></i>
+                    </div>
+                    {% endif %}
+
+                    <div class="card-body text-center" style="background-color: #ffffff;">
+                        <h5 class="card-title mb-2 fw-bold text-dark">
+                            <i class="fas fa-user"></i> {{ client.name }}
+                        </h5>
+
+                        <p class="text-muted mb-1"><i class="fas fa-phone me-2"></i>{{ client.phone_number }}</p>
+
+
+                        <!-- Show Assigned Agent or Campaign -->
+                        {% with client.clientcampaign_set.first as client_campaign %}
+                        {% if client.agent %}
+                        <p class="text-muted mb-1"><i class="fas fa-user-tie me-2"></i>Agent: {{ client.agent.name }}
+                        </p>
+                        {% elif client_campaign and client_campaign.campaign %}
+                        <p class="text-muted mb-1">
+                            <i class="fas fa-bullhorn me-2"></i>Campaign: {{ client_campaign.campaign.name }}
+                        </p>
+                        {% endif %}
+                        {% endwith %}
+
+
+                        <div class="d-flex justify-content-center">
+                            <a href="{% url 'admin_view_client' client.id %}"
+                                class="btn btn-outline-primary btn-sm me-2">
+                                <i class="fas fa-eye"></i> View Profile
+                            </a>
+                            {% if client.campaign %}
+                            <a href="{% url 'campaign_details' client.campaign.id %}"
+                                class="btn btn-outline-success btn-sm">
+                                <i class="fas fa-bullhorn"></i> View Campaign
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            {% if not clients %}
+            <p class="text-center text-muted">No clients found.</p>
+            {% endif %}
+        </div>
+    </div>
+
+
+
+
+
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+
+
+    <script>
+        const toggleButton = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
+
+        toggleButton.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+
+        const links = sidebar.querySelectorAll('a');
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                links.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            });
+        });
+    </script>
+
+</body>
+
+</html>

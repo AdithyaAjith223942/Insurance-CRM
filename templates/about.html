@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Include Font Awesome -->
+    <title>About Us</title>
+    <style>
+        /* Custom Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: #003366;
+            /* Dark Blue */
+            padding: 20px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-nav .nav-link.active {
+            color: #008000;
+        }
+
+        .navbar-brand {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #fff;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand i {
+            font-size: 2.5rem;
+            /* Icon size */
+            margin-right: 10px;
+            color: #ffcc00;
+            /* Icon color */
+        }
+
+        .navbar-nav .nav-link {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-right: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #ffcc00;
+            /* Gold color on hover */
+        }
+
+
+        /* Hero Section Styling */
+        .hero {
+            background: linear-gradient(to right, #003366, #006699);
+            color: #fff;
+            text-align: center;
+            padding: 120px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 40px;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .hero .btn {
+            background-color: #ffcc00;
+            color: #003366;
+            font-size: 1.3rem;
+            padding: 16px 40px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero .btn:hover {
+            background-color: #e6b800;
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        /* Carousel Styling */
+        .carousel-inner img {
+            width: 100%;
+            height: 600px;
+            object-fit: cover;
+        }
+
+        /* About Us Section Styling */
+        .about-us {
+            padding: 80px 20px;
+            background-color: #ffffff;
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .about-us h2 {
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            color: #003366;
+        }
+
+        .about-us p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+            color: #555;
+            font-weight: 300;
+        }
+
+        /* Footer Styling */
+        footer {
+            background-color: #003366;
+            color: #fff;
+            top: 110px;
+            text-align: center;
+            padding: 60px 20px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        footer .social-icons {
+            margin-top: 30px;
+        }
+
+        footer .social-icons a {
+            color: #fff;
+            font-size: 1.7rem;
+            margin: 0 20px;
+            text-decoration: none;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        footer .social-icons a:hover {
+            color: #ffcc00;
+            transform: scale(1.1);
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .hero .btn {
+                font-size: 1rem;
+                padding: 12px 30px;
+            }
+
+            .navbar-nav .nav-link {
+                font-size: 1rem;
+            }
+
+            .about-us h2 {
+                font-size: 2.2rem;
+            }
+
+            .about-us p {
+                font-size: 1rem;
+            }
+        }
+
+        .about-section {
+            background-color: #f8f9fa;
+            /* Light background color */
+            padding: 40px 0;
+            /* Add some padding around the section */
+        }
+
+        .card {
+            background-color: #ffffff;
+            /* White background for the card */
+            padding: 20px;
+        }
+
+        .card-body {
+            color: #333;
+            /* Dark text color */
+        }
+
+        .card-title {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .card-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .stylish-navbar .nav-link {
+    font-size: 16px;
+    transition: color 0.3s ease-in-out;
+}
+
+.stylish-navbar .nav-link:hover {
+    color: #ffd700;
+     /* Gold hover effect */
+}
+
+.stylish-navbar .nav-link.active {
+    font-weight: bold;
+    color: yellow;
+     /* Stands out on active */
+    border-bottom: 3px solid #ffd700; /* Highlight active link */
+}
+        /* Responsive Comments Section */
+.comment {
+    display: flex;
+    align-items: start;
+    background-color: #f0f8ff;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    transition: box-shadow 0.3s;
+}
+
+.comment img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.comment:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.comment p {
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .comment {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .comment img {
+        margin-bottom: 10px;
+        margin-right: 0;
+    }
+
+    .comment div {
+        text-align: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .comment {
+        padding: 10px;
+    }
+
+    .comment img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .comment p {
+        font-size: 0.9rem;
+    }
+}
+
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark stylish-navbar  bg-primary  shadow-sm" >
+        <div class="container-fluid">
+            <!-- Brand -->
+            <a class="navbar-brand d-flex align-items-center" href="#" style="font-weight: bold; font-size: 12px; padding-left: 10%; letter-spacing: 1px;">
+                <i class="fas fa-shield-alt me-2"></i> SecureLife Insurance
+            </a>
+    
+            <!-- Navbar Toggler -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    
+            <!-- Navbar Links -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}" style="padding: 10px 20px; font-size: 16px; transition: all 0.3s;">
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'login_view' %}active{% endif %}" href="{% url 'login_view' %}" style="padding: 10px 20px; font-size: 16px; transition: all 0.3s;">
+                            Login
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url 'about' %}" style="padding: 10px 20px; font-size: 16px; transition: all 0.3s;">
+                            About Us
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- About Us Content -->
+    <div class="container mt-5">
+        <div class="card shadow-lg" style="border-radius: 15px;">
+            <div class="card-body">
+                <h1 class="card-title text-center text-primary mb-4">About Us</h1>
+                <p class="card-text">
+                    Welcome to SecureLife Insurance! We are dedicated to providing reliable, comprehensive, and
+                    affordable insurance solutions that meet the diverse needs of our clients. Our goal is to ensure
+                    that you feel secure and supported at every stage of your life.
+                </p>
+                <p class="card-text">
+                    Our team of experts works tirelessly to offer a wide range of insurance policies, including life,
+                    health, home, and auto insurance. Whether you're looking for individual or family coverage, we have
+                    solutions tailored to your needs.
+                </p>
+                <p class="card-text">
+                    At SecureLife, we understand that choosing the right insurance policy can be overwhelming. That’s
+                    why we prioritize customer service and provide detailed guidance to help you make informed
+                    decisions. Our agents are always ready to assist you with any questions or concerns.
+                </p>
+                <p class="card-text">
+                    We believe in building lasting relationships with our clients. Our mission is not just to sell
+                    policies, but to ensure peace of mind by offering ongoing support and advice throughout your journey
+                    with us.
+                </p>
+                <p class="card-text">
+                    Thank you for choosing SecureLife Insurance as your trusted provider. We look forward to serving you
+                    and protecting what matters most to you.
+                </p>
+
+                <!-- Comments Section -->
+               <!-- Comments Section -->
+<div id="comments" class="container mt-5">
+    <h2 class="text-center text-primary mb-4">Comments</h2>
+
+    <!-- Comment Form -->
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow border-0 mb-4" style="border-radius: 15px;">
+                <div class="card-body p-4">
+                    <h3 class="card-title text-center text-secondary mb-4">Leave a Comment</h3>
+                    <form>
+                        <div class="form-group mb-3">
+                            <label for="commenter-name" class="fw-bold">Name</label>
+                            <input type="text" class="form-control border-primary" id="commenter-name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="comment" class="fw-bold">Comment</label>
+                            <textarea class="form-control border-primary" id="comment" rows="4" placeholder="Your Comment" required></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-sm px-2">Post Comment</button>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Display Previous Comments -->
+    <div class="mt-5">
+        <h3 class="text-primary text-center">Previous Comments</h3>
+
+        <!-- Sample Comment Template -->
+        <div class="comment mt-4 p-4 shadow-sm d-flex align-items-start rounded" style="background-color: #f0f8ff;">
+            <img src="https://via.placeholder.com/50" alt="Profile DP" class="rounded-circle me-3" style="width: 50px; height: 50px;">
+            <div>
+                <p class="fw-bold mb-1"> Anonymoususer234 <span class="text-muted" style="font-size: 0.9rem;">- 2 days ago</span></p>
+                <p class="mb-0 text-secondary">SecureLife Insurance has been a great choice for my family! Their team is helpful and always available for our questions. Highly recommend!</p>
+            </div>
+        </div>
+
+        <div class="comment mt-4 p-4 shadow-sm d-flex align-items-start rounded" style="background-color: #f0f8ff;">
+            <img src="https://via.placeholder.com/50" alt="Profile DP" class="rounded-circle me-3" style="width: 50px; height: 50px;">
+            <div>
+                <p class="fw-bold mb-1"> Anonymoususer332 <span class="text-muted" style="font-size: 0.9rem;">- 5 days ago</span></p>
+                <p class="mb-0 text-secondary">Amazing service and good coverage options. I'm very happy with the policies and the support team. Thank you, SecureLife!</p>
+            </div>
+        </div>
+
+        <div class="comment mt-4 p-4 shadow-sm d-flex align-items-start rounded" style="background-color: #f0f8ff;">
+            <img src="https://via.placeholder.com/50" alt="Profile DP" class="rounded-circle me-3" style="width: 50px; height: 50px;">
+            <div>
+                <p class="fw-bold mb-1"> Anonymoususer333 <span class="text-muted" style="font-size: 0.9rem;">- 1 week ago</span></p>
+                <p class="mb-0 text-secondary">I switched to SecureLife a few months ago, and so far, everything has been excellent. The policies are affordable, and the staff is very knowledgeable.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 SecureLife Insurance. All rights reserved.</p>
+        <div class="social-icons">
+            <a href="#" class="fab fa-facebook"></a>
+            <a href="#" class="fab fa-twitter"></a>
+            <a href="#" class="fab fa-linkedin"></a>
+            <a href="#" class="fab fa-instagram"></a>
+        </div>
+    </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
